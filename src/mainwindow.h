@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QClipboard>
 
 namespace Ui {
     class MainWindow;
@@ -17,6 +18,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QClipboard *qClipboard;
+
+private slots:
+
+    void clipboardSelectionChanged();
 };
 
 #endif // MAINWINDOW_H
