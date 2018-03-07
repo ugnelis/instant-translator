@@ -6,12 +6,12 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    ui->plainTextEdit->installEventFilter(this);
-    qClipboard = QApplication::clipboard();
+
+    clipboard = QApplication::clipboard();
 
     QObject::connect(
-            qClipboard, &QClipboard::selectionChanged,
-            this, &MainWindow::clipboardSelectionChanged
+            clipboard, &QClipboard::dataChanged,
+            this, &MainWindow::onClipboardDataChanged
     );
 }
 
@@ -19,6 +19,13 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::clipboardSelectionChanged() {
-    ui->plainTextEdit->setPlainText(qClipboard->text(QClipboard::Mode::Selection));
+void MainWindow::onClipboardDataChanged() {
+    ui->plainTextEdit->setPlainText(clipboard->text(QClipboard::Mode::Clipboard));
+
+    // Bring app to front.
+    this->setWindowState(Qt::WindowActive);
+}
+
+void MainWindow::on_exitAction_triggered() {
+    this->close();
 }

@@ -16,13 +16,13 @@ public:
 
     ~MainWindow();
 
+private slots:
+    void onClipboardDataChanged();
+    void on_exitAction_triggered();
+
 private:
     Ui::MainWindow *ui;
-    QClipboard *qClipboard;
-
-private slots:
-
-    void clipboardSelectionChanged();
+    QClipboard *clipboard;
 };
 
 #endif // MAINWINDOW_H
