@@ -13,17 +13,24 @@ MainWindow::MainWindow(QWidget *parent) :
             clipboard, &QClipboard::dataChanged,
             this, &MainWindow::onClipboardDataChanged
     );
+
+    api = new GoogleAPI();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete api;
 }
 
 void MainWindow::onClipboardDataChanged() {
-    ui->plainTextEdit->setPlainText(clipboard->text(QClipboard::Mode::Clipboard));
-
     // Bring app to front.
     this->setWindowState(Qt::WindowActive);
+
+    QString inputString = clipboard->text(QClipboard::Mode::Clipboard);
+    ui->inputPlainTextEdit->setPlainText(inputString);
+
+    QString outputString = QString::fromStdString(api->translate(inputString.toStdString()));
+    ui->outpuPlainTextEdit->setPlainText(outputString);
 }
 
 void MainWindow::on_exitAction_triggered() {

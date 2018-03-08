@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QClipboard>
+#include "utils/api.h"
+#include "utils/googleapi.h"
 
 namespace Ui {
     class MainWindow;
@@ -23,6 +25,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QClipboard *clipboard;
+    API *api;
 };
 
 #endif // MAINWINDOW_H
