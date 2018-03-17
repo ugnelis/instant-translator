@@ -15,11 +15,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 # Add Qt CMake path.
 #set(CMAKE_PREFIX_PATH path/to/Qt5/lib/cmake)
 
-# Find the QtWidgets library.
+# Find the Qt libraries.
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Network REQUIRED)
+find_package(Qt5Concurrent REQUIRED)
 
 # Qt5 libraries.
-set(QT5_LIBRARIES Qt5::Widgets)
+set(QT5_LIBRARIES
+        Qt5::Widgets
+        Qt5::Network
+        Qt5::Concurrent)
 
 # UI files.
 qt5_wrap_ui(UI_HEADERS mainwindow.ui)
@@ -31,9 +36,12 @@ qt5_add_resources(RESOURCE_FILES_ADDED ${RESOURCE_FILES})
 
 # Source files.
 set(SOURCE_FILES
+        utils/api.cpp
         utils/api.h
         utils/googleapi.cpp
         utils/googleapi.h
+        utils/requestmanager.cpp
+        utils/requestmanager.h
         main.cpp
         mainwindow.cpp
         mainwindow.h

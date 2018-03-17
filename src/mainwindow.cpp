@@ -13,13 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
             clipboard, &QClipboard::dataChanged,
             this, &MainWindow::onClipboardDataChanged
     );
-
-    api = new GoogleAPI();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
-    delete api;
 }
 
 void MainWindow::onClipboardDataChanged() {
@@ -29,8 +26,18 @@ void MainWindow::onClipboardDataChanged() {
     QString inputString = clipboard->text(QClipboard::Mode::Clipboard);
     ui->inputPlainTextEdit->setPlainText(inputString);
 
-    QString outputString = QString::fromStdString(api->translate(inputString.toStdString()));
-    ui->outpuPlainTextEdit->setPlainText(outputString);
+    QFuture<void> future = QtConcurrent::run(this, &MainWindow::runTranslation, inputString);
+//    future.waitForFinished();
+}
+
+void MainWindow::runTranslation(QString inputString) {
+    GoogleAPI api;
+    QString outputString = api.translate(inputString);
+    QObject::connect(
+            clipboard, &QClipboard::dataChanged,
+            this, &MainWindow::onClipboardDataChanged
+    );
+//    ui->outpuPlainTextEdit->setPlainText(outputString);
 }
 
 void MainWindow::on_exitAction_triggered() {

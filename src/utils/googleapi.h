@@ -2,7 +2,12 @@
 #define INSTANT_TRANSLATOR_GOOGLEAPI_H
 
 #include <string>
+#include <QObject>
+#include <QSettings>
+#include <QJsonObject>
+#include <QJsonDocument>
 #include "api.h"
+#include "utils/requestmanager.h"
 
 /**
  * Google Translate API implementation class.
@@ -10,9 +15,10 @@
 class GoogleAPI : public API {
 public:
     /**
-     * Constructor.
+     * Constructs an object with parent object parent.
+     * @param parent Parent of an object may be viewed as the object's owner.
      */
-    GoogleAPI();
+    explicit GoogleAPI(QObject *parent = nullptr);
 
     /**
      * Destructor.
@@ -24,7 +30,10 @@ public:
      * @param input input string.
      * @return output string.
      */
-    std::string translate(const std::string &input) const override;
+    QString translate(const QString &input) override;
+
+private:
+    RequestManager *requestManager;
 };
 
 #endif // INSTANT_TRANSLATOR_GOOGLEAPI_H
