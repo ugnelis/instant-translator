@@ -8,7 +8,7 @@ RequestManager::~RequestManager() {
     delete manager;
 }
 
-void RequestManager::postRequest(QNetworkRequest request, QByteArray data) {
+void RequestManager::postRequest(const QNetworkRequest &request, const QByteArray &data) {
     QObject::connect(manager, SIGNAL(finished(QNetworkReply * )),
                      this, SLOT(onGetReply(QNetworkReply * )));
     networkReply = manager->post(request, data);
@@ -19,7 +19,7 @@ void RequestManager::postRequest(QNetworkRequest request, QByteArray data) {
     loop.exec();
 }
 
-void RequestManager::getRequest(QNetworkRequest request) {
+void RequestManager::getRequest(const QNetworkRequest &request) {
     networkReply = manager->get(request);
 
     // Wait for the reply.

@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QSettings>
-#include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include "api.h"
 #include "utils/requestmanager.h"
 

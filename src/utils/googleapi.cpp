@@ -1,4 +1,3 @@
-#include <QCoreApplication>
 #include "googleapi.h"
 
 GoogleAPI::GoogleAPI(QObject *parent)
@@ -28,7 +27,6 @@ QString GoogleAPI::translate(const QString &input) {
     urlString.append("&target=" + target);
     urlString.append("&format=" + format);
     urlString.append("&q=" + input);
-    qDebug() << urlString;
 
     QUrl url(urlString);
     QNetworkRequest request(url);
@@ -36,7 +34,17 @@ QString GoogleAPI::translate(const QString &input) {
     RequestManager *requestManager = new RequestManager(this);
     requestManager->getRequest(request);
 
-    QString result = requestManager->getReply().data();
+    // Parse the replay.
+    QByteArray replyByteArray = requestManager->getReply();
 
-    return result;
+    QJsonDocument replyJsonDocument = QJsonDocument::fromJson(replyByteArray.data());
+    QJsonObject replyJsonObject = replyJsonDocument.object();
+
+    QString translation = replyJsonObject["data"]
+            .toObject()["translations"]
+            .toArray()[0]
+            .toObject()["translatedText"]
+            .toString();
+
+    return translation;
 }

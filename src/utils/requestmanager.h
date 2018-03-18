@@ -25,13 +25,13 @@ public:
      * @param request Request.
      * @param data Data.
      */
-    void postRequest(QNetworkRequest request, QByteArray data);
+    void postRequest(const QNetworkRequest &request, const QByteArray &data);
 
     /**
      * Send GET request.
      * @param request Request.
      */
-    void getRequest(QNetworkRequest request);
+    void getRequest(const QNetworkRequest &request);
 
     /**
      * Get reply from the request.
