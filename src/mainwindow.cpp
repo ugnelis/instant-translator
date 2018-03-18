@@ -1,4 +1,3 @@
-#include <QDebug>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -26,18 +25,21 @@ void MainWindow::onClipboardDataChanged() {
     QString inputString = clipboard->text(QClipboard::Mode::Clipboard);
     ui->inputPlainTextEdit->setPlainText(inputString);
 
-    QFuture<void> future = QtConcurrent::run(this, &MainWindow::runTranslation, inputString);
-//    future.waitForFinished();
+    // Translate text in different thread.
+    QFutureWatcher<QString> *futureWatcher = new QFutureWatcher<QString>(this);
+    QFuture<QString> future = QtConcurrent::run(this, &MainWindow::runTranslation, inputString);
+
+    // Output translated text
+    connect(futureWatcher, &QFutureWatcher<QString>::finished,
+            [=]() { this->ui->outpuPlainTextEdit->setPlainText(futureWatcher->result()); });
+
+    futureWatcher->setFuture(future);
 }
 
-void MainWindow::runTranslation(QString inputString) {
+QString MainWindow::runTranslation(const QString &inputString) {
     GoogleAPI api;
     QString outputString = api.translate(inputString);
-    QObject::connect(
-            clipboard, &QClipboard::dataChanged,
-            this, &MainWindow::onClipboardDataChanged
-    );
-//    ui->outpuPlainTextEdit->setPlainText(outputString);
+    return outputString;
 }
 
 void MainWindow::on_exitAction_triggered() {

@@ -24,7 +24,7 @@ QString GoogleAPI::translate(const QString &input) {
     urlString.append("&source=" + source);
     urlString.append("&target=" + target);
     urlString.append("&format=" + format);
-    urlString.append("&q=das Buch");
+    urlString.append("&q=" + input);
     qDebug() << urlString;
 
     QUrl url(urlString);

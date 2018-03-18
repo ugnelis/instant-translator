@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QClipboard>
 #include <QFuture>
+#include <QFutureWatcher>
 #include <QtConcurrent>
 #include "utils/api.h"
 #include "utils/googleapi.h"
@@ -16,14 +17,14 @@ namespace Ui {
  * Main window class.
  */
 class MainWindow : public QMainWindow {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     /**
      * Constructs an object with parent object parent.
      * @param parent Parent of an object may be viewed as the object's owner.
      */
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
 
     /**
      * Destructor.
@@ -43,7 +44,12 @@ private slots:
     void on_exitAction_triggered();
 
 private:
-    void runTranslation(QString inputString);
+    /**
+     * Run translation.
+     * @param inputString Text for translation.
+     * @return Translated text.
+     */
+    QString runTranslation(const QString &inputString);
 
     Ui::MainWindow *ui;
     QClipboard *clipboard;

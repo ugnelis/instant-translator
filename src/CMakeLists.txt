@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.5)
 project(instant_translator)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -50,5 +50,5 @@ set(SOURCE_FILES
 # Tell CMake to create the executable.
 add_executable(instant_translator ${SOURCE_FILES} ${RESOURCE_FILES_ADDED} ${UI_HEADERS})
 
-# Use the Widgets module from Qt 5.
+# Use the Widgets module from Qt5.
 target_link_libraries(instant_translator ${QT5_LIBRARIES})
