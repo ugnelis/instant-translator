@@ -1,7 +1,6 @@
 #ifndef INSTANT_TRANSLATOR_GOOGLEAPI_H
 #define INSTANT_TRANSLATOR_GOOGLEAPI_H
 
-#include <string>
 #include <QObject>
 #include <QSettings>
 #include <QJsonObject>
@@ -23,7 +22,7 @@ public:
     /**
      * Destructor.
      */
-    ~GoogleAPI();
+    ~GoogleAPI() override;
 
     /**
      * Translate given input.

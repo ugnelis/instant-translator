@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QEventLoop>
 
 class RequestManager : public QObject {
 Q_OBJECT
@@ -38,17 +39,9 @@ public:
      */
     QByteArray getReply();
 
-public slots:
-
-    /**
-     * On get network reply.
-     * @param reply Network reply.
-     */
-    void onGetReply(QNetworkReply *reply);
-
 private:
     QNetworkAccessManager *manager; // Network manager.
-    QByteArray data;                // Last received data.
+    QNetworkReply *networkReply;    // Network reply.
 };
 
 #endif //INSTANT_TRANSLATOR_REQUESTMANAGER_H
