@@ -40,11 +40,16 @@ QString GoogleAPI::translate(const QString &input) {
     QJsonDocument replyJsonDocument = QJsonDocument::fromJson(replyByteArray.data());
     QJsonObject replyJsonObject = replyJsonDocument.object();
 
-    QString translation = replyJsonObject["data"]
+    QJsonArray translationsJsonArray = replyJsonObject["data"]
             .toObject()["translations"]
-            .toArray()[0]
-            .toObject()["translatedText"]
-            .toString();
+            .toArray();
+
+    QString translation;
+
+    foreach (const QJsonValue &jsonValue, translationsJsonArray) {
+        QJsonObject jsonObject = jsonValue.toObject();
+        translation.append(jsonObject["translatedText"].toString());
+    }
 
     return translation;
 }

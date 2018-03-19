@@ -8,9 +8,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     clipboard = QApplication::clipboard();
 
-    QObject::connect(
-            clipboard, &QClipboard::dataChanged,
-            this, &MainWindow::onClipboardDataChanged
+    connect(
+            clipboard,
+            &QClipboard::dataChanged,
+            this,
+            &MainWindow::onClipboardDataChanged
     );
 }
 
@@ -30,8 +32,11 @@ void MainWindow::onClipboardDataChanged() {
     QFuture<QString> future = QtConcurrent::run(this, &MainWindow::runTranslation, inputString);
 
     // Output translated text
-    connect(futureWatcher, &QFutureWatcher<QString>::finished,
-            [=]() { this->ui->outpuPlainTextEdit->setPlainText(futureWatcher->result()); });
+    connect(
+            futureWatcher,
+            &QFutureWatcher<QString>::finished,
+            [=]() { this->ui->outpuPlainTextEdit->setPlainText(futureWatcher->result()); }
+    );
 
     futureWatcher->setFuture(future);
 }

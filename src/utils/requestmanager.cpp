@@ -9,13 +9,16 @@ RequestManager::~RequestManager() {
 }
 
 void RequestManager::postRequest(const QNetworkRequest &request, const QByteArray &data) {
-    QObject::connect(manager, SIGNAL(finished(QNetworkReply * )),
-                     this, SLOT(onGetReply(QNetworkReply * )));
     networkReply = manager->post(request, data);
 
     // Wait for the reply.
     QEventLoop loop;
-    connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    connect(
+            networkReply,
+            SIGNAL(finished()),
+            &loop,
+            SLOT(quit())
+    );
     loop.exec();
 }
 
@@ -24,7 +27,12 @@ void RequestManager::getRequest(const QNetworkRequest &request) {
 
     // Wait for the reply.
     QEventLoop loop;
-    connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    connect(
+            networkReply,
+            SIGNAL(finished()),
+            &loop,
+            SLOT(quit())
+    );
     loop.exec();
 }
 
