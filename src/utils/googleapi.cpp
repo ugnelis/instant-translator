@@ -19,20 +19,26 @@ QString GoogleAPI::translate(const QString &input) {
     QString target = settings.value("target").toString();
     QString format = settings.value("format").toString();
 
-    // Format GET url string.
+    // Format POST url string.
     QByteArray authorizationHeaderContent = "Bearer " + key.toUtf8();
-    QString urlString = "https://www.googleapis.com/language/translate/v2?";
+    QString urlString = "https://translation.googleapis.com/language/translate/v2?";
     urlString.append("&key=" + key);
-    urlString.append("&source=" + source);
-    urlString.append("&target=" + target);
-    urlString.append("&format=" + format);
-    urlString.append("&q=" + input);
+
+    // Format Json object.
+    QJsonObject postJsonObject;
+    postJsonObject["source"] = source;
+    postJsonObject["target"] = target;
+    postJsonObject["format"] = format;
+    postJsonObject["q"] = input;
+
+    QJsonDocument postJsonDocument(postJsonObject);
 
     QUrl url(urlString);
     QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     RequestManager *requestManager = new RequestManager(this);
-    requestManager->getRequest(request);
+    requestManager->postRequest(request, postJsonDocument.toJson());
 
     // Parse the replay.
     QByteArray replyByteArray = requestManager->getReply();
