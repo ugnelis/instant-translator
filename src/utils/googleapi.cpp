@@ -1,5 +1,4 @@
 #include "googleapi.h"
-#include <QDebug>
 
 GoogleAPI::GoogleAPI(QObject *parent)
         : API(parent), requestManager(new RequestManager(this)) {
