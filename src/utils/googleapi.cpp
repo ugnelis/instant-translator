@@ -13,14 +13,13 @@ QString GoogleAPI::translate(const QString &input) {
         return QString();
     }
 
-    QSettings settings;
-    QString key = settings.value("api/google/key").toString();
-    QString source = settings.value("source").toString();
-    QString target = settings.value("target").toString();
-    QString format = settings.value("format").toString();
+    QSettings settings(":/configs/api.ini", QSettings::IniFormat);
+    QString key = settings.value("google/key").toString();
+    QString source = settings.value("google/source").toString();
+    QString target = settings.value("google/target").toString();
+    QString format = settings.value("google/format").toString();
 
     // Format POST url string.
-    QByteArray authorizationHeaderContent = "Bearer " + key.toUtf8();
     QString urlString = "https://translation.googleapis.com/language/translate/v2?";
     urlString.append("&key=" + key);
 
