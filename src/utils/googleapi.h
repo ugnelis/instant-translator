@@ -32,6 +32,12 @@ public:
      */
     QString translate(const QString &input) override;
 
+    /**
+     * Get supported languages.
+     * @return Supported languages string list.
+     */
+    QStringList getSupportedLanguages() override;
+
 private:
     RequestManager *requestManager;
 };
