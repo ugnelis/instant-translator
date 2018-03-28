@@ -1,14 +1,13 @@
 #include "googleapi.h"
 
 GoogleAPI::GoogleAPI(QObject *parent)
-        : API(parent), requestManager(new RequestManager(this)) {
+        : API(parent) {
 }
 
 GoogleAPI::~GoogleAPI() {
-    delete requestManager;
 }
 
-QString GoogleAPI::translate(const QString &input) {
+QString GoogleAPI::translate(const QString &input) const {
     if (input.isEmpty()) {
         return QString();
     }
@@ -36,11 +35,11 @@ QString GoogleAPI::translate(const QString &input) {
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    RequestManager *requestManager = new RequestManager(this);
-    requestManager->postRequest(request, postJsonDocument.toJson());
+    RequestManager requestManager;
+    requestManager.postRequest(request, postJsonDocument.toJson());
 
     // Parse the replay.
-    QByteArray replyByteArray = requestManager->getReply();
+    QByteArray replyByteArray = requestManager.getReply();
 
     QJsonDocument replyJsonDocument = QJsonDocument::fromJson(replyByteArray.data());
     QJsonObject replyJsonObject = replyJsonDocument.object();
@@ -59,7 +58,7 @@ QString GoogleAPI::translate(const QString &input) {
     return translation;
 }
 
-QStringList GoogleAPI::getSupportedLanguages() {
+QStringList GoogleAPI::getSupportedLanguages() const {
     QSettings settings(":/configs/api.ini", QSettings::IniFormat);
     QString key = settings.value("google/key").toString();
 
@@ -70,11 +69,11 @@ QStringList GoogleAPI::getSupportedLanguages() {
     QUrl url(urlString);
     QNetworkRequest request(url);
 
-    RequestManager *requestManager = new RequestManager(this);
-    requestManager->getRequest(request);
+    RequestManager requestManager;
+    requestManager.getRequest(request);
 
     // Parse the replay.
-    QByteArray replyByteArray = requestManager->getReply();
+    QByteArray replyByteArray = requestManager.getReply();
 
     QJsonDocument replyJsonDocument = QJsonDocument::fromJson(replyByteArray.data());
     QJsonObject replyJsonObject = replyJsonDocument.object();

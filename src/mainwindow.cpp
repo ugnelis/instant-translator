@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <functional>
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
@@ -7,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     clipboard = QApplication::clipboard();
+
+    api = new GoogleAPI();
 
     connect(
             clipboard,
@@ -18,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete api;
 }
 
 void MainWindow::onClipboardDataChanged() {
@@ -29,7 +33,7 @@ void MainWindow::onClipboardDataChanged() {
 
     // Translate text in different thread.
     QFutureWatcher<QString> *futureWatcher = new QFutureWatcher<QString>(this);
-    QFuture<QString> future = QtConcurrent::run(this, &MainWindow::runTranslation, inputString);
+    QFuture<QString> future = QtConcurrent::run(this, &MainWindow::runTranslation, inputString, api);
 
     // Output translated text
     connect(
@@ -41,9 +45,12 @@ void MainWindow::onClipboardDataChanged() {
     futureWatcher->setFuture(future);
 }
 
-QString MainWindow::runTranslation(const QString &inputString) {
-    GoogleAPI api;
-    QString outputString = api.translate(inputString);
+QString MainWindow::runTranslation(const QString &inputString, API *api) {
+    if (api == NULL) {
+        return "";
+    }
+
+    QString outputString = api->translate(inputString);
     return outputString;
 }
 

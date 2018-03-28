@@ -22,13 +22,13 @@ public:
      * @param input Input string.
      * @return Output string.
      */
-    virtual QString translate(const QString &input) = 0;
+    virtual QString translate(const QString &input) const = 0;
 
     /**
      * Get supported languages.
      * @return Supported languages string list.
      */
-    virtual QStringList getSupportedLanguages() = 0;
+    virtual QStringList getSupportedLanguages() const = 0;
 };
 
 #endif // INSTANT_TRANSLATOR_API_H

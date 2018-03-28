@@ -47,12 +47,14 @@ private:
     /**
      * Run translation.
      * @param inputString Text for translation.
+     * @param api Translation API.
      * @return Translated text.
      */
-    QString runTranslation(const QString &inputString);
+    QString runTranslation(const QString &inputString, API *api);
 
-    Ui::MainWindow *ui;
-    QClipboard *clipboard;
+    Ui::MainWindow *ui;     // MainWindow user interface.
+    QClipboard *clipboard;  // Clipboard information.
+    API *api;               // Translation API.
 };
 
 #endif // MAINWINDOW_H
