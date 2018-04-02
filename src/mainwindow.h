@@ -46,6 +46,12 @@ private slots:
 
 private:
     /**
+     * Load languages in sourceLanguagesComboBox
+     * and targetLanguagesComboBox.
+     */
+    void loadLanguagesInComboBoxes();
+
+    /**
      * Run translation.
      * @param api Translation API.
      * @param inputString Text for translation.
@@ -57,6 +63,13 @@ private:
                            const QString &inputString,
                            const QString &sourceLanguage,
                            const QString &targetLanguage);
+
+    /**
+     * Run get supported languages call.
+     * @param api Translation API.
+     * @return Supported languages string list.
+     */
+    QStringList runGetSupportedLanguages(API *api);
 
     Ui::MainWindow *ui;     // MainWindow user interface.
     QClipboard *clipboard;  // Clipboard information.
