@@ -6,6 +6,7 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtConcurrent>
+#include <QStringList>
 #include "utils/api.h"
 #include "utils/googleapi.h"
 
@@ -46,11 +47,16 @@ private slots:
 private:
     /**
      * Run translation.
-     * @param inputString Text for translation.
      * @param api Translation API.
+     * @param inputString Text for translation.
+     * @param sourceLanguage Source language code.
+     * @param targetLanguage Target language code.
      * @return Translated text.
      */
-    QString runTranslation(const QString &inputString, API *api);
+    QString runTranslation(API *api,
+                           const QString &inputString,
+                           const QString &sourceLanguage,
+                           const QString &targetLanguage);
 
     Ui::MainWindow *ui;     // MainWindow user interface.
     QClipboard *clipboard;  // Clipboard information.

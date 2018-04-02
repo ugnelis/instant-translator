@@ -20,9 +20,13 @@ public:
     /**
      * Translate given input.
      * @param input Input string.
-     * @return Output string.
+     * @param sourceLanguage Source language code.
+     * @param targetLanguage Target language code.
+     * @return Translated string.
      */
-    virtual QString translate(const QString &input) const = 0;
+    virtual QString translate(const QString &input,
+                              const QString &sourceLanguage,
+                              const QString &targetLanguage) const = 0;
 
     /**
      * Get supported languages.

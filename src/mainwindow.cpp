@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <functional>
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
@@ -10,6 +9,12 @@ MainWindow::MainWindow(QWidget *parent) :
     clipboard = QApplication::clipboard();
 
     api = new GoogleAPI();
+
+    // Load API supported languages to the combo boxes.
+    QStringList languages = api->getSupportedLanguages();
+
+    ui->sourceLanguagesComboBox->addItems(languages);
+    ui->targetLanguagesComboBox->addItems(languages);
 
     connect(
             clipboard,
@@ -33,7 +38,16 @@ void MainWindow::onClipboardDataChanged() {
 
     // Translate text in different thread.
     QFutureWatcher<QString> *futureWatcher = new QFutureWatcher<QString>(this);
-    QFuture<QString> future = QtConcurrent::run(this, &MainWindow::runTranslation, inputString, api);
+    QString sourceLanguage = "de";
+    QString targetLanguage = "en";
+    QFuture<QString> future = QtConcurrent::run(
+            this,
+            &MainWindow::runTranslation,
+            api,
+            inputString,
+            sourceLanguage,
+            targetLanguage
+    );
 
     // Output translated text
     connect(
@@ -45,12 +59,15 @@ void MainWindow::onClipboardDataChanged() {
     futureWatcher->setFuture(future);
 }
 
-QString MainWindow::runTranslation(const QString &inputString, API *api) {
+QString MainWindow::runTranslation(API *api,
+                                   const QString &inputString,
+                                   const QString &sourceLanguage,
+                                   const QString &targetLanguage) {
     if (api == NULL) {
         return "";
     }
 
-    QString outputString = api->translate(inputString);
+    QString outputString = api->translate(inputString, sourceLanguage, targetLanguage);
     return outputString;
 }
 

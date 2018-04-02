@@ -7,15 +7,15 @@ GoogleAPI::GoogleAPI(QObject *parent)
 GoogleAPI::~GoogleAPI() {
 }
 
-QString GoogleAPI::translate(const QString &input) const {
+QString GoogleAPI::translate(const QString &input,
+                             const QString &sourceLanguage,
+                             const QString &targetLanguage) const {
     if (input.isEmpty()) {
         return QString();
     }
 
     QSettings settings(":/configs/api.ini", QSettings::IniFormat);
     QString key = settings.value("google/key").toString();
-    QString source = settings.value("google/source").toString();
-    QString target = settings.value("google/target").toString();
     QString format = settings.value("google/format").toString();
 
     // Format POST url string.
@@ -24,8 +24,8 @@ QString GoogleAPI::translate(const QString &input) const {
 
     // Format Json object.
     QJsonObject postJsonObject;
-    postJsonObject["source"] = source;
-    postJsonObject["target"] = target;
+    postJsonObject["source"] = sourceLanguage;
+    postJsonObject["target"] = targetLanguage;
     postJsonObject["format"] = format;
     postJsonObject["q"] = input;
 

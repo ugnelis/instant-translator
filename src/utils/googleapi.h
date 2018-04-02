@@ -27,10 +27,14 @@ public:
 
     /**
      * Translate given input.
-     * @param input input string.
-     * @return output string.
+     * @param input Input string.
+     * @param sourceLanguage Source language code.
+     * @param targetLanguage Target language code.
+     * @return Translated string.
      */
-    QString translate(const QString &input) const override;
+    QString translate(const QString &input,
+                      const QString &sourceLanguage,
+                      const QString &targetLanguage) const override;
 
     /**
      * Get supported languages.
