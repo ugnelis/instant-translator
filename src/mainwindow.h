@@ -44,7 +44,17 @@ private slots:
      */
     void on_exitAction_triggered();
 
+    /**
+     * On translateButton clicked.
+     */
+    void on_translateButton_clicked();
+
 private:
+    /**
+     * Do translation.
+     */
+    void doTranslation();
+
     /**
      * Load languages in sourceLanguagesComboBox
      * and targetLanguagesComboBox.

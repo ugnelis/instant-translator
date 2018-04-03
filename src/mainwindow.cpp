@@ -36,6 +36,13 @@ void MainWindow::onClipboardDataChanged() {
     QString inputString = clipboard->text(QClipboard::Mode::Clipboard);
     ui->inputPlainTextEdit->setPlainText(inputString);
 
+    // Perform translation.
+    doTranslation();
+}
+
+void MainWindow::doTranslation() {
+    QString inputString = ui->inputPlainTextEdit->toPlainText();
+
     // Translate text in different thread.
     QFutureWatcher<QString> *futureWatcher = new QFutureWatcher<QString>(this);
 
@@ -122,4 +129,9 @@ QStringList MainWindow::runGetSupportedLanguages(API *api) {
 
 void MainWindow::on_exitAction_triggered() {
     this->close();
+}
+
+void MainWindow::on_translateButton_clicked() {
+    // Perform translation.
+    doTranslation();
 }
