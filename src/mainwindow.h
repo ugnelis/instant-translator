@@ -49,11 +49,21 @@ private slots:
      */
     void on_translateButton_clicked();
 
+    /**
+     * On swapLanguagesButton clicked.
+     */
+    void on_swapLanguagesButton_clicked();
+
 private:
     /**
      * Do translation.
      */
     void doTranslation();
+
+    /**
+     * Swap languages in the combo boxes.
+     */
+    void swapLanguagesInComboBoxes();
 
     /**
      * Load languages in sourceLanguagesComboBox

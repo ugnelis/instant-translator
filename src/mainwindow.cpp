@@ -67,6 +67,14 @@ void MainWindow::doTranslation() {
     futureWatcher->setFuture(future);
 }
 
+void MainWindow::swapLanguagesInComboBoxes() {
+    int sourceLanguagesComboBoxIndex = ui->sourceLanguagesComboBox->currentIndex();
+    int targetLanguagesComboBoxIndex = ui->targetLanguagesComboBox->currentIndex();
+
+    ui->sourceLanguagesComboBox->setCurrentIndex(targetLanguagesComboBoxIndex);
+    ui->targetLanguagesComboBox->setCurrentIndex(sourceLanguagesComboBoxIndex);
+}
+
 void MainWindow::loadLanguagesInComboBoxes() {
     // Get API supported languages.
     QFutureWatcher<QStringList> *futureWatcher = new QFutureWatcher<QStringList>(this);
@@ -134,4 +142,9 @@ void MainWindow::on_exitAction_triggered() {
 void MainWindow::on_translateButton_clicked() {
     // Perform translation.
     doTranslation();
+}
+
+void MainWindow::on_swapLanguagesButton_clicked() {
+    // Swap languages in the combo boxes.
+    swapLanguagesInComboBoxes();
 }
