@@ -2,6 +2,5 @@
 <RCC version="1.0">
     <qresource>
         <file>configs/api.ini</file>
-        <file>configs/config.ini</file>
     </qresource>
 </RCC>

@@ -23,7 +23,12 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 MainWindow::~MainWindow() {
-    // TODO(Ugnelis): save selected languages.
+    // Save used translation languages.
+    QSettings settings;
+    QString sourceLanguage = ui->sourceLanguagesComboBox->currentText();
+    QString targetLanguage = ui->targetLanguagesComboBox->currentText();
+    settings.setValue("source", sourceLanguage);
+    settings.setValue("target", targetLanguage);
 
     delete ui;
     delete api;
@@ -94,9 +99,9 @@ void MainWindow::loadLanguagesInComboBoxes() {
                 ui->targetLanguagesComboBox->addItems(languages);
 
                 // Load saved translation languages.
-                QSettings settings(":/configs/config.ini", QSettings::IniFormat);
-                QString sourceLanguage = settings.value("source").toString();
-                QString targetLanguage = settings.value("target").toString();
+                QSettings settings;
+                QString sourceLanguage = settings.value("source", "de").toString();
+                QString targetLanguage = settings.value("target", "en").toString();
 
                 // Set source language.
                 int sourceLanguageIndex = languages.indexOf(sourceLanguage);
