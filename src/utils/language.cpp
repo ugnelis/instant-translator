@@ -1,4 +1,5 @@
 #include "language.h"
+#include <QDebug>
 
 Language::Language() {
     readFromJsonFile();
@@ -13,6 +14,22 @@ QString Language::getName(QString code) {
 
 QString Language::getCode(QString name) {
     return hash.key(name);
+}
+
+QStringList Language::getLanguages(QStringList codeList) {
+    QStringList nameList;
+    foreach (QString code, codeList) {
+        nameList.append(hash.value(code));
+    }
+    return nameList;
+}
+
+QStringList Language::getCodes(QStringList nameList) {
+    QStringList codeList;
+    foreach (QString name, nameList) {
+        codeList.append(hash.key(name));
+    }
+    return codeList;
 }
 
 void Language::readFromJsonFile(QString jsonFile) {

@@ -25,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow() {
     // Save used translation languages.
     QSettings settings;
-    QString sourceLanguage = ui->sourceLanguagesComboBox->currentText();
-    QString targetLanguage = ui->targetLanguagesComboBox->currentText();
+    QString sourceLanguage = language.getCode(ui->sourceLanguagesComboBox->currentText());
+    QString targetLanguage = language.getCode(ui->targetLanguagesComboBox->currentText());
     settings.setValue("source", sourceLanguage);
     settings.setValue("target", targetLanguage);
 
@@ -51,8 +51,8 @@ void MainWindow::doTranslation() {
     // Translate text in different thread.
     QFutureWatcher<QString> *futureWatcher = new QFutureWatcher<QString>(this);
 
-    QString sourceLanguage = ui->sourceLanguagesComboBox->currentText();
-    QString targetLanguage = ui->targetLanguagesComboBox->currentText();
+    QString sourceLanguage = language.getCode(ui->sourceLanguagesComboBox->currentText());
+    QString targetLanguage = language.getCode(ui->targetLanguagesComboBox->currentText());
     QFuture<QString> future = QtConcurrent::run(
             this,
             &MainWindow::runTranslation,
@@ -94,9 +94,10 @@ void MainWindow::loadLanguagesInComboBoxes() {
             futureWatcher,
             &QFutureWatcher<QStringList>::finished,
             [=]() {
-                QStringList languages = futureWatcher->result();
-                ui->sourceLanguagesComboBox->addItems(languages);
-                ui->targetLanguagesComboBox->addItems(languages);
+                QStringList languageCodeList = futureWatcher->result();
+                QStringList languageNameList = language.getLanguages(languageCodeList);
+                ui->sourceLanguagesComboBox->addItems(languageNameList);
+                ui->targetLanguagesComboBox->addItems(languageNameList);
 
                 // Load saved translation languages.
                 QSettings settings;
@@ -104,13 +105,13 @@ void MainWindow::loadLanguagesInComboBoxes() {
                 QString targetLanguage = settings.value("target", "en").toString();
 
                 // Set source language.
-                int sourceLanguageIndex = languages.indexOf(sourceLanguage);
+                int sourceLanguageIndex = languageCodeList.indexOf(sourceLanguage);
                 if (sourceLanguageIndex != -1) {
                     ui->sourceLanguagesComboBox->setCurrentIndex(sourceLanguageIndex);
                 }
 
                 // Set target language.
-                int targetLanguageIndex = languages.indexOf(targetLanguage);
+                int targetLanguageIndex = languageCodeList.indexOf(targetLanguage);
                 if (targetLanguageIndex != -1) {
                     ui->targetLanguagesComboBox->setCurrentIndex(targetLanguageIndex);
                 }

@@ -3,6 +3,7 @@
 
 #include <QHash>
 #include <QString>
+#include <QStringList>
 #include <QIODevice>
 #include <QFile>
 #include <QJsonDocument>
@@ -37,6 +38,20 @@ public:
      * @return Language code.
      */
     QString getCode(QString name);
+
+    /**
+     * Get the names of the languages.
+     * @param codeList Language code list.
+     * @return Language name list.
+     */
+    QStringList getLanguages(QStringList codeList);
+
+    /**
+     * Get the codes of the languages.
+     * @param nameList Language name list.
+     * @return codeList Language code list.
+     */
+    QStringList getCodes(QStringList nameList);
 
 private:
     /**
