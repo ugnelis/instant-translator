@@ -7,8 +7,9 @@
 #include <QFutureWatcher>
 #include <QtConcurrent>
 #include <QStringList>
-#include "utils/api.h"
-#include "utils/googleapi.h"
+#include "apis/api.h"
+#include "apis/googleapi.h"
+#include "utils/language.h"
 
 namespace Ui {
     class MainWindow;
@@ -94,6 +95,7 @@ private:
     Ui::MainWindow *ui;     // MainWindow user interface.
     QClipboard *clipboard;  // Clipboard information.
     API *api;               // Translation API.
+    Language language;
 };
 
 #endif // MAINWINDOW_H

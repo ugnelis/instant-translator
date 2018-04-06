@@ -36,10 +36,12 @@ qt5_add_resources(RESOURCE_FILES_ADDED ${RESOURCE_FILES})
 
 # Source files.
 set(SOURCE_FILES
-        utils/api.cpp
-        utils/api.h
-        utils/googleapi.cpp
-        utils/googleapi.h
+        apis/api.cpp
+        apis/api.h
+        apis/googleapi.cpp
+        apis/googleapi.h
+        utils/language.cpp
+        utils/language.h
         utils/requestmanager.cpp
         utils/requestmanager.h
         main.cpp
