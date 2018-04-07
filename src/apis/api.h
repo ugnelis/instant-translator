@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QStringList>
 
 /**
  * Abstract class for API classes.
@@ -19,9 +20,19 @@ public:
     /**
      * Translate given input.
      * @param input Input string.
-     * @return Output string.
+     * @param sourceLanguage Source language code.
+     * @param targetLanguage Target language code.
+     * @return Translated string.
      */
-    virtual QString translate(const QString &input) = 0;
+    virtual QString translate(const QString &input,
+                              const QString &sourceLanguage,
+                              const QString &targetLanguage) const = 0;
+
+    /**
+     * Get supported languages.
+     * @return Supported languages string list.
+     */
+    virtual QStringList getSupportedLanguages() const = 0;
 };
 
 #endif // INSTANT_TRANSLATOR_API_H

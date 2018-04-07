@@ -6,8 +6,10 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtConcurrent>
-#include "utils/api.h"
-#include "utils/googleapi.h"
+#include <QStringList>
+#include "apis/api.h"
+#include "apis/googleapi.h"
+#include "utils/language.h"
 
 namespace Ui {
     class MainWindow;
@@ -43,16 +45,57 @@ private slots:
      */
     void on_exitAction_triggered();
 
+    /**
+     * On translateButton clicked.
+     */
+    void on_translateButton_clicked();
+
+    /**
+     * On swapLanguagesButton clicked.
+     */
+    void on_swapLanguagesButton_clicked();
+
 private:
     /**
+     * Do translation.
+     */
+    void doTranslation();
+
+    /**
+     * Swap languages in the combo boxes.
+     */
+    void swapLanguagesInComboBoxes();
+
+    /**
+     * Load languages in sourceLanguagesComboBox
+     * and targetLanguagesComboBox.
+     */
+    void loadLanguagesInComboBoxes();
+
+    /**
      * Run translation.
+     * @param api Translation API.
      * @param inputString Text for translation.
+     * @param sourceLanguage Source language code.
+     * @param targetLanguage Target language code.
      * @return Translated text.
      */
-    QString runTranslation(const QString &inputString);
+    QString runTranslation(API *api,
+                           const QString &inputString,
+                           const QString &sourceLanguage,
+                           const QString &targetLanguage);
 
-    Ui::MainWindow *ui;
-    QClipboard *clipboard;
+    /**
+     * Run get supported languages call.
+     * @param api Translation API.
+     * @return Supported languages string list.
+     */
+    QStringList runGetSupportedLanguages(API *api);
+
+    Ui::MainWindow *ui;     // MainWindow user interface.
+    QClipboard *clipboard;  // Clipboard information.
+    API *api;               // Translation API.
+    Language language;
 };
 
 #endif // MAINWINDOW_H

@@ -13,7 +13,7 @@ public:
      * Constructs an object with parent object parent.
      * @param parent Parent of an object may be viewed as the object's owner.
      */
-    explicit RequestManager(QObject *parent);
+    explicit RequestManager(QObject *parent = nullptr);
 
     /**
      * Destructor.

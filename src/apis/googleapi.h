@@ -27,13 +27,20 @@ public:
 
     /**
      * Translate given input.
-     * @param input input string.
-     * @return output string.
+     * @param input Input string.
+     * @param sourceLanguage Source language code.
+     * @param targetLanguage Target language code.
+     * @return Translated string.
      */
-    QString translate(const QString &input) override;
+    QString translate(const QString &input,
+                      const QString &sourceLanguage,
+                      const QString &targetLanguage) const override;
 
-private:
-    RequestManager *requestManager;
+    /**
+     * Get supported languages.
+     * @return Supported languages string list.
+     */
+    QStringList getSupportedLanguages() const override;
 };
 
 #endif // INSTANT_TRANSLATOR_GOOGLEAPI_H

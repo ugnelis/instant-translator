@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>320</height>
+    <width>600</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,21 +15,68 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QComboBox" name="sourceLanguagesComboBox"/>
+    </item>
     <item row="1" column="0">
      <widget class="QPlainTextEdit" name="inputPlainTextEdit">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="readOnly">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <property name="plainText">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="5" column="0">
      <widget class="QPlainTextEdit" name="outpuPlainTextEdit"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QComboBox" name="targetLanguagesComboBox"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QWidget" name="gridWidget" native="true">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="translateButton">
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(114, 159, 207);</string>
+         </property>
+         <property name="text">
+          <string>Translate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="swapLanguagesButton">
+         <property name="text">
+          <string>Swap Languages</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -38,8 +85,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
-     <height>20</height>
+     <width>600</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
