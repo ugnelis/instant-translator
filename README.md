@@ -1,7 +1,7 @@
 # instant-translator
 Translate words and sentences instantly. Program uses various translator APIs.
 
-## What the program solves?
+## What the Program Solves?
 ### Context
 I am a in the country whose language I know only the basics.
 
@@ -30,7 +30,7 @@ format=text
 ### Translate by Pressing the Keyboard
 Currently, it's made that when clipboard (copy or cut operation) is changed then the app translates the text.
 
-## Minimum software requirements
+## Minimum Software Requirements
 * A desktop operating system that supports Qt.
 * Qt 5.3+
 * gcc 4.8+
