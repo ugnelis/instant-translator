@@ -1,7 +1,7 @@
-# instant-translator
+# instant-translator [![Build Status](https://travis-ci.org/ugnelis/instant-translator.svg?branch=master)](https://travis-ci.org/ugnelis/instant-translator)
 Translate words and sentences instantly. Program uses various translator APIs.
 
-## What the Program Solves?
+## What Does the App Solve?
 ### Context
 I am a in the country whose language I know only the basics.
 
@@ -19,7 +19,7 @@ I have made a desktop application that can translate both web pages and dekstop-
 
 ## How to Use?
 ### Add API key
-First of all, you need to get API key for desired API. Then put it in [resources/configs/api.ini](server/resources/configs/api.ini) file.
+First of all, you need to get API key for desired API. Then put it in [src/resources/configs/api.ini](src/resources/configs/api.ini) file.
 Example:
 ``` ini
 [google]
