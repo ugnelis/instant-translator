@@ -4,6 +4,12 @@ language: cpp
 os:
   - linux
 
+before_install:
+  - |
+    if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+      pip install --user cpp-coveralls
+    fi
+
 install:
   - |
     if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
@@ -17,13 +23,20 @@ install:
     fi
 
 script:
+  # Setup environment.
   - |
     if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
       QTDIR="/opt/qt56"
       PATH="$QTDIR/bin:$PATH"
       qt56-env.sh
     fi
+  # Build.
   - mkdir build && cd build
   - cmake ..
   - make
   - CTEST_OUTPUT_ON_FAILURE=1 make test
+  # Coveralls.
+  - ./configure --enable-gcov && make && make check
+
+after_success:
+  - coveralls --exclude test --gcov-options '\-lp'
