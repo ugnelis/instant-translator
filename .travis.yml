@@ -37,4 +37,5 @@ script:
   - CTEST_OUTPUT_ON_FAILURE=1 make test
 
 after_success:
-  - coveralls --exclude test --gcov-options '\-lp'
+  - coveralls -e test/ -e googletest/ -e CMakeFiles/ -E .+/moc_.* -E .+/qrc_.* -E .+/qxt.* -E .+/ui_.* > coveralls.log
+ 
