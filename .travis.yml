@@ -37,5 +37,5 @@ script:
   - CTEST_OUTPUT_ON_FAILURE=1 make test
 
 after_success:
-  - coveralls -e test/ -e googletest/ -e CMakeFiles/ -E .+/moc_.* -E .+/qrc_.* -E .+/qxt.* -E .+/ui_.* > coveralls.log
+  - coveralls -r `readlink -m ./../` -e test/ -E .+/moc_.* -E .+/qrc_.* -E .+/qxt.* -E .+/ui_.* > coveralls.log
  
