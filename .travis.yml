@@ -35,8 +35,6 @@ script:
   - cmake ..
   - make
   - CTEST_OUTPUT_ON_FAILURE=1 make test
-  # Coveralls.
-  - ./configure --enable-gcov && make && make check
 
 after_success:
   - coveralls --exclude test --gcov-options '\-lp'
