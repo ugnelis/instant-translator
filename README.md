@@ -1,15 +1,15 @@
 # instant-translator [![Build Status](https://travis-ci.org/ugnelis/instant-translator.svg?branch=master)](https://travis-ci.org/ugnelis/instant-translator) [![Coverage Status](https://coveralls.io/repos/github/ugnelis/instant-translator/badge.svg?branch=master)](https://coveralls.io/github/ugnelis/instant-translator?branch=master)
-Translate words and sentences instantly. Program uses various translator APIs.
+Translate words and sentences instantly. Program uses APIs of various translators.
 
 ## What Does the App Solve?
 ### Context
-I am a in the country whose language I know only the basics.
+Currently, I live in the country whose language I only know the basics.
 
 ### Problem
-Most things are in local language. It was necessary to quickly search words or sentences quickly, not only on the WEB pages but also in various dekstop applications.
+Most of the things are in local language. So, it is necessary to adapt quickly by searching for the meanings of the words or the sentences in various applications (WEB based, desktop based).
 
 ### Solution to the Problem
-I have made a desktop application that can translate both web pages and dekstop-based applications and translate that text into the program by clicking on the desired button.
+Desktop application that is able to translate the content of web pages and dekstop-based applications in the app by clicking on the desired button.
 
 ## Screenshot
 ![Screenshot](screenshot.png)
