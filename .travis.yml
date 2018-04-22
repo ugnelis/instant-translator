@@ -17,7 +17,7 @@ install:
       sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
       sudo apt-add-repository -y ppa:beineri/opt-qt562-trusty
       sudo apt-get -qq update
-      sudo apt-get -qq install g++-4.8 libc6-i386 qt56tools qt56svg qt56script
+      sudo apt-get -qq install g++-4.8 libc6-i386 qt56tools qt56svg qt56script lcov
       export CXX="g++-4.8"
       export CC="gcc-4.8"
     fi
@@ -34,8 +34,8 @@ script:
   - mkdir build && cd build
   - cmake -DCMAKE_BUILD_TYPE=Debug ..
   - make
-  - CTEST_OUTPUT_ON_FAILURE=1 make test
-  - make project_coverage
+#  - CTEST_OUTPUT_ON_FAILURE=1 make test
+#  - make project_coverage
 
 after_success:
   - coveralls -r `readlink -m ./../` -e tests/ -E .+/moc_.* -E .+/qrc_.* -E .+/qxt.* -E .+/ui_.* > coveralls.log
