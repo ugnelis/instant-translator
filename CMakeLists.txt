@@ -19,12 +19,16 @@ else ()
 endif ()
 
 # Coverage.
-if (CMAKE_COMPILER_IS_GNUCXX)
-    include(cmake/coverage.cmake)
-    setup_target_for_coverage(project_coverage unit_tests coverage)
-endif ()
+option(COVERAGE "Generate coverage data" OFF)
+if (COVERAGE)
+    if (CMAKE_COMPILER_IS_GNUCXX)
+        include(cmake/coverage.cmake)
+        setup_target_for_coverage(project_coverage unit_tests coverage)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -pthread -g -O0 -fprofile-arcs -ftest-coverage")
+        set(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+        set(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+    endif ()
+endif ()
 
 # Add source folder.
 add_subdirectory(src)

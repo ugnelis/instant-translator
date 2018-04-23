@@ -32,10 +32,9 @@ script:
     fi
   # Build.
   - mkdir build && cd build
-  - cmake -DCMAKE_BUILD_TYPE=Debug ..
+  - cmake -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=ON ..
   - make
-#  - CTEST_OUTPUT_ON_FAILURE=1 make test
-#  - make project_coverage
+  - CTEST_OUTPUT_ON_FAILURE=1 make test
 
 after_success:
-  - coveralls -r `readlink -m ./../` -e tests/ -E .+/moc_.* -E .+/qrc_.* -E .+/qxt.* -E .+/ui_.* > coveralls.log
+  - coveralls --root .. -e tests/ -E .+/moc_.* -E .+/qrc_.* -E .+/qxt.* -E .+/ui_.* > coveralls.log
