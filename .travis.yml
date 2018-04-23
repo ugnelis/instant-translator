@@ -37,4 +37,4 @@ script:
   - CTEST_OUTPUT_ON_FAILURE=1 make test
 
 after_success:
-  - coveralls --root .. --build-root . -e tests/ -E .+/moc_.* -E .+/qrc_.* -E .+/qxt.* -E .+/ui_.* > coveralls.log
+  - coveralls --root .. --build-root . -e build/ -e tests/  -E .+/moc_.* -E .+/qrc_.* -E .+/qxt.* -E .+/ui_.* > coveralls.log
