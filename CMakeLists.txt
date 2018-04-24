@@ -8,9 +8,26 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
-# This is used for code coverage.
-if (CMAKE_CXX_COMPILER_ID MATCHES GNU)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+# Threading support doesn't exist for some cross compile targets.
+find_package(Thread QUIET)
+
+if (CMAKE_THREAD_LIBS_INIT)
+    set(gtest_disable_pthreads OFF)
+else ()
+    message(STATUS "Disabling pthread in Google Test.")
+    set(gtest_disable_pthreads ON)
+endif ()
+
+# Coverage.
+option(COVERAGE "Generate coverage data" OFF)
+if (COVERAGE)
+    if (CMAKE_COMPILER_IS_GNUCXX)
+        include(cmake/coverage.cmake)
+        setup_target_for_coverage(project_coverage unit_tests coverage)
+
+        set(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+        set(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+    endif ()
 endif ()
 
 # Add source folder.
@@ -24,4 +41,4 @@ fetch_googletest(
 )
 
 enable_testing()
-add_subdirectory(test)
+add_subdirectory(tests)

@@ -4,6 +4,12 @@ language: cpp
 os:
   - linux
 
+before_install:
+  - |
+    if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+      pip install --user cpp-coveralls
+    fi
+
 install:
   - |
     if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
@@ -11,18 +17,24 @@ install:
       sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
       sudo apt-add-repository -y ppa:beineri/opt-qt562-trusty
       sudo apt-get -qq update
-      sudo apt-get -qq install g++-4.8 libc6-i386 qt56tools qt56svg qt56script
+      sudo apt-get -qq install g++-4.8 libc6-i386 qt56tools qt56svg qt56script lcov
       export CXX="g++-4.8"
       export CC="gcc-4.8"
     fi
 
 script:
+  # Setup environment.
   - |
     if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
       QTDIR="/opt/qt56"
       PATH="$QTDIR/bin:$PATH"
       qt56-env.sh
     fi
+  # Build.
   - mkdir build && cd build
-  - cmake ..
+  - cmake -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=ON ..
   - make
+  - CTEST_OUTPUT_ON_FAILURE=1 make test
+
+after_success:
+  - coveralls --root .. --build-root . -e tests/ -E .*googletest.* -E .*CMakeFiles.* -E .+/moc_.* -E .+/mocs_.* -E .+/qrc_.* -E .+/qxt.* -E .+/ui_.* > coveralls.log
