@@ -23,7 +23,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # Source files.
 set(SOURCE_FILES
-        language_test.cpp
+        utils/language_test.cpp
         ${PROJECT_SOURCE_DIR}/src/utils/language.cpp
         ${PROJECT_SOURCE_DIR}/src/utils/language.h)
 

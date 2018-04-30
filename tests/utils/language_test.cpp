@@ -2,17 +2,17 @@
 #include <QStringList>
 #include "utils/language.h"
 
-TEST(Language, getCode) {
+TEST(LanguageTests, getCode_ConvertLanguageToName_True) {
     Language language;
     ASSERT_EQ("lt", language.getCode("Lithuanian"));
 }
 
-TEST(Language, getName) {
+TEST(LanguageTests, getName_ConvertCodeToName_True) {
     Language language;
     ASSERT_EQ("Lithuanian", language.getName("lt"));
 }
 
-TEST(Language, getLanguages) {
+TEST(LanguageTests, getLanguages_ConvertCodesToLanguages_True) {
     Language language;
     QStringList codesList;
     codesList.append("lt");
@@ -23,7 +23,7 @@ TEST(Language, getLanguages) {
     ASSERT_EQ("English", languagesList.at(1));
 }
 
-TEST(Language, getCodes) {
+TEST(LanguageTests, getCodes_ConvertLanguagesToCodes_True) {
     Language language;
     QStringList languagesList;
     languagesList.append("Lithuanian");
