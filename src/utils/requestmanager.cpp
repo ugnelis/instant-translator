@@ -4,6 +4,10 @@ RequestManager::RequestManager(QObject *parent)
         : QObject(parent), manager(new QNetworkAccessManager) {
 }
 
+RequestManager::RequestManager(QObject *parent, QNetworkAccessManager *manager)
+        : QObject(parent), manager(manager) {
+}
+
 RequestManager::~RequestManager() {
     delete manager;
 }

@@ -16,6 +16,13 @@ public:
     explicit RequestManager(QObject *parent = nullptr);
 
     /**
+     * Constructs an object with parent object parent.
+     * @param parent Parent of an object may be viewed as the object's owner.
+     * @param manager Network access manager.
+     */
+    RequestManager(QObject *parent, QNetworkAccessManager *manager);
+
+    /**
      * Destructor.
      */
     ~RequestManager() override;
