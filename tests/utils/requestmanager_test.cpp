@@ -6,7 +6,6 @@
 #include <QNetworkAccessManager>
 #include "utils/requestmanager.h"
 #include "utils/customnetworkreply.h"
-#include <QDebug>
 
 class MockQNetworkAccessManager : public QNetworkAccessManager {
 public:
@@ -27,7 +26,7 @@ protected:
 TEST(RequestManagerTests, postRequest_SendPostRequest_True) {
     int argc = 0;
     char **argv = 0;
-    QApplication app(argc, argv);
+    QCoreApplication app(argc, argv);
 
     // Format Json object.
     QJsonObject postJsonObject;

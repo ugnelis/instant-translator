@@ -14,7 +14,6 @@ RequestManager::~RequestManager() {
 
 void RequestManager::postRequest(const QNetworkRequest &request, const QByteArray &data) {
     networkReply = manager->post(request, data);
-//    networkReply = manager->createRequest(QNetworkAccessManager::PostOperation, request, data);
 
     // Wait for the reply.
     QEventLoop loop;
