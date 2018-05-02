@@ -1,9 +1,13 @@
+set(CMAKE_CXX_STANDARD 11)
+
 # Find includes in corresponding build directories.
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 # Instruct CMake to run uic automatically when needed.
 set(CMAKE_AUTOUIC ON)
+# Add a compiler flag.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 # Find the Qt libraries.
 find_package(Qt5Widgets REQUIRED)
