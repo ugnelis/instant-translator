@@ -1,14 +1,14 @@
 #include "requestmanager.h"
 
 RequestManager::RequestManager(QObject *parent, std::unique_ptr<QNetworkAccessManager> manager)
-        : QObject(parent), manager(std::move(manager)) {
+        : QObject(parent), manager(std::move(manager)), networkReplyData(QByteArray("")) {
 }
 
 RequestManager::~RequestManager() {
 }
 
 void RequestManager::postRequest(const QNetworkRequest &request, const QByteArray &data) {
-    networkReply = manager->post(request, data);
+    QNetworkReply *networkReply = manager->post(request, data);
 
     // Wait for the reply.
     QEventLoop loop;
@@ -19,10 +19,12 @@ void RequestManager::postRequest(const QNetworkRequest &request, const QByteArra
             SLOT(quit())
     );
     loop.exec();
+
+    networkReplyData = networkReply->readAll();
 }
 
 void RequestManager::getRequest(const QNetworkRequest &request) {
-    networkReply = manager->get(request);
+    QNetworkReply *networkReply = manager->get(request);
 
     // Wait for the reply.
     QEventLoop loop;
@@ -33,11 +35,10 @@ void RequestManager::getRequest(const QNetworkRequest &request) {
             SLOT(quit())
     );
     loop.exec();
+
+    networkReplyData = networkReply->readAll();
 }
 
 QByteArray RequestManager::getReply() {
-    if (networkReply == nullptr) {
-        return QByteArray();
-    }
-    return networkReply->readAll();
+    return networkReplyData;
 }

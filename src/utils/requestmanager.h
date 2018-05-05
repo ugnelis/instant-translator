@@ -43,7 +43,7 @@ public:
 
 private:
     std::unique_ptr<QNetworkAccessManager> manager; // Network manager.
-    QNetworkReply *networkReply; // Network reply.
+    QByteArray networkReplyData; // Network reply data.
 };
 
 #endif //INSTANT_TRANSLATOR_REQUESTMANAGER_H

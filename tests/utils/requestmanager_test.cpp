@@ -60,15 +60,6 @@ TEST(RequestManagerTests, getRequest_SendGetRequest_True) {
     char **argv = 0;
     QCoreApplication app(argc, argv);
 
-    // Format Json object.
-    QJsonObject postJsonObject;
-    postJsonObject["source"] = "lt";
-    postJsonObject["target"] = "en";
-    postJsonObject["format"] = "text";
-    postJsonObject["q"] = "Labas";
-
-    QJsonDocument postJsonDocument(postJsonObject);
-
     // Make request.
     QUrl url("https://randomurl.com/");
     QNetworkRequest request(url);
@@ -83,5 +74,26 @@ TEST(RequestManagerTests, getRequest_SendGetRequest_True) {
 
     // Test.
     QString expected = "{\"data\":{\"translations\":[{\"translatedText\":\"Hello\"}]}}";
+    ASSERT_EQ(expected, requestManager.getReply());
+}
+
+TEST(RequestManagerTests, getReply_NetworkReplyIsNull_True) {
+    int argc = 0;
+    char **argv = 0;
+    QCoreApplication app(argc, argv);
+
+    // Make request.
+    QUrl url("https://randomurl.com/");
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    // Send request.
+    std::unique_ptr<MockQNetworkAccessManager> manager =
+            std::unique_ptr<MockQNetworkAccessManager>(new MockQNetworkAccessManager());
+
+    RequestManager requestManager(nullptr, std::move(manager));
+
+    // Test.
+    QByteArray expected("");
     ASSERT_EQ(expected, requestManager.getReply());
 }
