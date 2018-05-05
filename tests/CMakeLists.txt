@@ -33,14 +33,15 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # Source files.
 set(SOURCE_FILES
+        utils/customnetworkreply_test.cpp
+        ${PROJECT_SOURCE_DIR}/src/utils/customnetworkreply.cpp
+        ${PROJECT_SOURCE_DIR}/src/utils/customnetworkreply.h
         utils/language_test.cpp
         ${PROJECT_SOURCE_DIR}/src/utils/language.cpp
         ${PROJECT_SOURCE_DIR}/src/utils/language.h
         utils/requestmanager_test.cpp
         ${PROJECT_SOURCE_DIR}/src/utils/requestmanager.cpp
-        ${PROJECT_SOURCE_DIR}/src/utils/requestmanager.h
-        ${PROJECT_SOURCE_DIR}/src/utils/customnetworkreply.cpp
-        ${PROJECT_SOURCE_DIR}/src/utils/customnetworkreply.h)
+        ${PROJECT_SOURCE_DIR}/src/utils/requestmanager.h)
 
 # Tell CMake to create the executable.
 add_executable(unit_tests ${SOURCE_FILES} ${RESOURCE_FILES_ADDED} ${UI_HEADERS})
