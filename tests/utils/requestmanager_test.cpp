@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <memory>
 #include <QApplication>
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -43,9 +44,10 @@ TEST(RequestManagerTests, postRequest_SendPostRequest_True) {
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     // Send request.
-    MockQNetworkAccessManager *manager = new MockQNetworkAccessManager();
+    std::unique_ptr<MockQNetworkAccessManager> manager =
+            std::unique_ptr<MockQNetworkAccessManager>(new MockQNetworkAccessManager());
 
-    RequestManager requestManager(nullptr, manager);
+    RequestManager requestManager(nullptr, std::move(manager));
     requestManager.postRequest(request, postJsonDocument.toJson());
 
     // Test.
@@ -73,9 +75,10 @@ TEST(RequestManagerTests, getRequest_SendGetRequest_True) {
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     // Send request.
-    MockQNetworkAccessManager *manager = new MockQNetworkAccessManager();
+    std::unique_ptr<MockQNetworkAccessManager> manager =
+            std::unique_ptr<MockQNetworkAccessManager>(new MockQNetworkAccessManager());
 
-    RequestManager requestManager(nullptr, manager);
+    RequestManager requestManager(nullptr, std::move(manager));
     requestManager.getRequest(request);
 
     // Test.
