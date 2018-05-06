@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 
 project(instant_translator)
 
+set (CMAKE_CXX_STANDARD 11)
+
 # Place binaries and libraries according to GNU standards.
 include(GNUInstallDirs)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})

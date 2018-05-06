@@ -1,6 +1,7 @@
 #ifndef INSTANT_TRANSLATOR_GOOGLEAPI_H
 #define INSTANT_TRANSLATOR_GOOGLEAPI_H
 
+#include <memory>
 #include <QObject>
 #include <QSettings>
 #include <QJsonDocument>

@@ -1,3 +1,13 @@
+set(CMAKE_CXX_STANDARD 11)
+
+# Find includes in corresponding build directories.
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Instruct CMake to run moc automatically when needed.
+set(CMAKE_AUTOMOC ON)
+# Instruct CMake to run uic automatically when needed.
+set(CMAKE_AUTOUIC ON)
+# Add a compiler flag.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 # Find the Qt libraries.
 find_package(Qt5Widgets REQUIRED)
@@ -23,15 +33,21 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # Source files.
 set(SOURCE_FILES
-        language_test.cpp
+        utils/customnetworkreply_test.cpp
+        ${PROJECT_SOURCE_DIR}/src/utils/customnetworkreply.cpp
+        ${PROJECT_SOURCE_DIR}/src/utils/customnetworkreply.h
+        utils/language_test.cpp
         ${PROJECT_SOURCE_DIR}/src/utils/language.cpp
-        ${PROJECT_SOURCE_DIR}/src/utils/language.h)
+        ${PROJECT_SOURCE_DIR}/src/utils/language.h
+        utils/requestmanager_test.cpp
+        ${PROJECT_SOURCE_DIR}/src/utils/requestmanager.cpp
+        ${PROJECT_SOURCE_DIR}/src/utils/requestmanager.h)
 
 # Tell CMake to create the executable.
 add_executable(unit_tests ${SOURCE_FILES} ${RESOURCE_FILES_ADDED} ${UI_HEADERS})
 
 # Use the Widgets module from Qt5.
-target_link_libraries(unit_tests ${QT5_LIBRARIES} gtest_main)
+target_link_libraries(unit_tests ${QT5_LIBRARIES} gtest_main gmock_main)
 
 # Add tests.
 add_test(
