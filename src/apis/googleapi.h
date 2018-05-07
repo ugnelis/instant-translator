@@ -12,7 +12,9 @@
 /**
  * Google Translate API implementation class.
  */
-class GoogleAPI : public API {
+class GoogleAPI : public QObject, public API {
+Q_OBJECT
+Q_INTERFACES(API)
 public:
     /**
      * Constructs an object with parent object parent.
