@@ -1,7 +1,7 @@
 #include "requestmanager.h"
 
-RequestManager::RequestManager(QObject *parent, std::unique_ptr<QNetworkAccessManager> manager)
-        : QObject(parent), manager(std::move(manager)), networkReplyData(QByteArray("")) {
+RequestManager::RequestManager(QObject *parent, QNetworkAccessManager *manager)
+        : QObject(parent), manager(manager), networkReplyData(QByteArray("")) {
 }
 
 RequestManager::~RequestManager() {

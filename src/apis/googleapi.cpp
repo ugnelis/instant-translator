@@ -36,8 +36,7 @@ QString GoogleAPI::translate(const QString &input,
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
 
-    std::unique_ptr<QNetworkAccessManager> manager =
-            std::unique_ptr<QNetworkAccessManager>(new QNetworkAccessManager());
+    QNetworkAccessManager *manager = new QNetworkAccessManager();
 
     RequestManager requestManager(nullptr, std::move(manager));
     requestManager.postRequest(request, postJsonDocument.toJson());
@@ -73,8 +72,7 @@ QStringList GoogleAPI::getSupportedLanguages() const {
     QUrl url(urlString);
     QNetworkRequest request(url);
 
-    std::unique_ptr<QNetworkAccessManager> manager =
-            std::unique_ptr<QNetworkAccessManager>(new QNetworkAccessManager());
+    QNetworkAccessManager *manager = new QNetworkAccessManager();
 
     RequestManager requestManager(nullptr, std::move(manager));
     requestManager.getRequest(request);
