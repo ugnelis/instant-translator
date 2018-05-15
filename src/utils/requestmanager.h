@@ -6,6 +6,9 @@
 #include <QNetworkReply>
 #include <QEventLoop>
 
+/**
+ * Request manager class.
+ */
 class RequestManager : public QObject {
 Q_OBJECT
 public:

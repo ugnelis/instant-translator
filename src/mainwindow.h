@@ -95,7 +95,7 @@ private:
     Ui::MainWindow *ui;     // MainWindow user interface.
     QClipboard *clipboard;  // Clipboard information.
     API *api;               // Translation API.
-    Language language;
+    Language language;      // Language.
 };
 
 #endif // MAINWINDOW_H
