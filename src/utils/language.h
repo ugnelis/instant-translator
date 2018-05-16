@@ -1,6 +1,7 @@
 #ifndef INSTANT_TRANSLATOR_LANGUAGE_H
 #define INSTANT_TRANSLATOR_LANGUAGE_H
 
+#include <QObject>
 #include <QHash>
 #include <QString>
 #include <QStringList>
@@ -13,17 +14,18 @@
 /**
  * Language codes and names holder.
  */
-class Language {
+class Language : public QObject {
 public:
     /**
-     * Constructor.
+     * Constructs an object with parent object parent.
+     * @param parent Parent of an object may be viewed as the object's owner.
      */
-    Language();
+    explicit Language(QObject *parent = nullptr);
 
     /**
      * Destructor.
      */
-    ~Language();
+    ~Language() override;
 
     /**
      * Get language name.

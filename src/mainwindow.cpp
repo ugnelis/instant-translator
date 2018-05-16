@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     );
 
     // Set Google Translator API.
-    api = new GoogleAPI();
+    api = new GoogleAPI(this);
 
     // Load supported languages in the combo boxes.
     loadLanguagesInComboBoxes();

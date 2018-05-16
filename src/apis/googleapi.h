@@ -1,7 +1,6 @@
 #ifndef INSTANT_TRANSLATOR_GOOGLEAPI_H
 #define INSTANT_TRANSLATOR_GOOGLEAPI_H
 
-#include <memory>
 #include <QObject>
 #include <QSettings>
 #include <QJsonDocument>
@@ -13,7 +12,9 @@
 /**
  * Google Translate API implementation class.
  */
-class GoogleAPI : public API {
+class GoogleAPI : public QObject, public API {
+Q_OBJECT
+Q_INTERFACES(API)
 public:
     /**
      * Constructs an object with parent object parent.

@@ -36,7 +36,6 @@ qt5_add_resources(RESOURCE_FILES_ADDED ${RESOURCE_FILES})
 
 # Source files.
 set(SOURCE_FILES
-        apis/api.cpp
         apis/api.h
         apis/googleapi.cpp
         apis/googleapi.h

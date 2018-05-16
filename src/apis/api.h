@@ -1,21 +1,19 @@
 #ifndef INSTANT_TRANSLATOR_API_H
 #define INSTANT_TRANSLATOR_API_H
 
-#include <QObject>
+#include <QtPlugin>
 #include <QString>
 #include <QStringList>
 
 /**
  * Abstract class for API classes.
  */
-class API : public QObject {
-Q_OBJECT
+class API {
 public:
     /**
-     * Constructs an object with parent object parent.
-     * @param parent Parent of an object may be viewed as the object's owner.
+     * Destructor.
      */
-    explicit API(QObject *parent = nullptr);
+    virtual ~API() {}
 
     /**
      * Translate given input.
@@ -34,5 +32,7 @@ public:
      */
     virtual QStringList getSupportedLanguages() const = 0;
 };
+
+Q_DECLARE_INTERFACE(API, "API")
 
 #endif // INSTANT_TRANSLATOR_API_H

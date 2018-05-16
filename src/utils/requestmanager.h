@@ -1,12 +1,14 @@
 #ifndef INSTANT_TRANSLATOR_REQUESTMANAGER_H
 #define INSTANT_TRANSLATOR_REQUESTMANAGER_H
 
-#include <memory>
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QEventLoop>
 
+/**
+ * Request manager class.
+ */
 class RequestManager : public QObject {
 Q_OBJECT
 public:
@@ -15,7 +17,7 @@ public:
      * @param parent Parent of an object may be viewed as the object's owner.
      * @param manager Network access manager.
      */
-    RequestManager(QObject *parent, std::unique_ptr<QNetworkAccessManager> manager);
+    RequestManager(QObject *parent, QNetworkAccessManager *manager);
 
     /**
      * Destructor.
@@ -42,7 +44,7 @@ public:
     QByteArray getReply();
 
 private:
-    std::unique_ptr<QNetworkAccessManager> manager; // Network manager.
+    QNetworkAccessManager *manager; // Network manager.
     QByteArray networkReplyData; // Network reply data.
 };
 
