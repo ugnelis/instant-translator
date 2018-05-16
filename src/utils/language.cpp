@@ -1,6 +1,7 @@
 #include "language.h"
 
-Language::Language(QObject *parent) {
+Language::Language(QObject *parent)
+        : QObject(parent) {
     readFromJsonFile();
 }
 
