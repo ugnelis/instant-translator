@@ -7,6 +7,7 @@
 #include <QFutureWatcher>
 #include <QtConcurrent>
 #include <QStringList>
+#include <QMessageBox>
 #include "apis/api.h"
 #include "apis/googleapi.h"
 #include "utils/language.h"
@@ -91,6 +92,12 @@ private:
      * @return Supported languages string list.
      */
     QStringList runGetSupportedLanguages(API *api);
+
+    /**
+     * Show error box.
+     * @param message Error message.
+     */
+    void showErrorBox(const QString &message);
 
     Ui::MainWindow *ui;     // MainWindow user interface.
     QClipboard *clipboard;  // Clipboard information.

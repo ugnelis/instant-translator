@@ -39,6 +39,7 @@ set(SOURCE_FILES
         apis/api.h
         apis/googleapi.cpp
         apis/googleapi.h
+        exceptions/invalidargumentexception.h
         utils/language.cpp
         utils/language.h
         utils/requestmanager.cpp

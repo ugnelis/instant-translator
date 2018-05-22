@@ -38,7 +38,7 @@ QString GoogleAPI::translate(const QString &input,
 
     QNetworkAccessManager *manager = new QNetworkAccessManager();
 
-    RequestManager requestManager(nullptr, std::move(manager));
+    RequestManager requestManager(nullptr, manager);
     requestManager.postRequest(request, postJsonDocument.toJson());
 
     // Parse the replay.
@@ -46,6 +46,11 @@ QString GoogleAPI::translate(const QString &input,
 
     QJsonDocument replyJsonDocument = QJsonDocument::fromJson(replyByteArray.data());
     QJsonObject replyJsonObject = replyJsonDocument.object();
+
+    // If error.
+    if (replyJsonObject.contains("error")) {
+        throw InvalidArgumentException();
+    }
 
     QJsonArray translationsJsonArray = replyJsonObject["data"]
             .toObject()["translations"]
@@ -74,7 +79,7 @@ QStringList GoogleAPI::getSupportedLanguages() const {
 
     QNetworkAccessManager *manager = new QNetworkAccessManager();
 
-    RequestManager requestManager(nullptr, std::move(manager));
+    RequestManager requestManager(nullptr, manager);
     requestManager.getRequest(request);
 
     // Parse the replay.
@@ -82,6 +87,11 @@ QStringList GoogleAPI::getSupportedLanguages() const {
 
     QJsonDocument replyJsonDocument = QJsonDocument::fromJson(replyByteArray.data());
     QJsonObject replyJsonObject = replyJsonDocument.object();
+
+    // If error.
+    if (replyJsonObject.contains("error")) {
+        throw InvalidArgumentException();
+    }
 
     QJsonArray languagesJsonArray = replyJsonObject["data"]
             .toObject()["languages"]

@@ -7,6 +7,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "api.h"
+#include "exceptions/invalidargumentexception.h"
 #include "utils/requestmanager.h"
 
 /**
