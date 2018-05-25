@@ -26,6 +26,9 @@ set(QT5_LIBRARIES
         Qt5::Network
         Qt5::Concurrent)
 
+set(OTHER_LIBRARIES
+        glog)
+
 # UI files.
 qt5_wrap_ui(UI_HEADERS mainwindow.ui)
 
@@ -53,4 +56,4 @@ set(SOURCE_FILES
 add_executable(instant_translator ${SOURCE_FILES} ${RESOURCE_FILES_ADDED} ${UI_HEADERS})
 
 # Use the Widgets module from Qt5.
-target_link_libraries(instant_translator ${QT5_LIBRARIES})
+target_link_libraries(instant_translator ${QT5_LIBRARIES} ${OTHER_LIBRARIES})

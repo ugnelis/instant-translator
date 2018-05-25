@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <glog/logging.h>
 #include "api.h"
 #include "exceptions/invalidargumentexception.h"
 #include "utils/requestmanager.h"

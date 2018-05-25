@@ -20,6 +20,9 @@ else ()
     set(gtest_disable_pthreads ON)
 endif ()
 
+# Set gflags off.
+set(WITH_GFLAGS OFF CACHE BOOL "Use gflags")
+
 # Coverage.
 option(COVERAGE "Generate coverage data" OFF)
 if (COVERAGE)
@@ -31,6 +34,13 @@ if (COVERAGE)
         set(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
     endif ()
 endif ()
+
+# Add a logging tool.
+include(cmake/glog.cmake)
+fetch_glog(
+        ${PROJECT_SOURCE_DIR}/cmake
+        ${PROJECT_BINARY_DIR}/glog
+)
 
 # Add source folder.
 add_subdirectory(src)

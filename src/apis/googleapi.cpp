@@ -49,6 +49,12 @@ QString GoogleAPI::translate(const QString &input,
 
     // If error.
     if (replyJsonObject.contains("error")) {
+        QJsonObject errorJsonObject = replyJsonObject["error"].toObject();
+        int errorCode = errorJsonObject["code"].toInt();
+        std::string errorMessage = errorJsonObject["message"]
+                .toString()
+                .toStdString();
+        DLOG(INFO) << "Error " + std::to_string(errorCode) + ": " + errorMessage;
         throw InvalidArgumentException();
     }
 
@@ -90,6 +96,12 @@ QStringList GoogleAPI::getSupportedLanguages() const {
 
     // If error.
     if (replyJsonObject.contains("error")) {
+        QJsonObject errorJsonObject = replyJsonObject["error"].toObject();
+        int errorCode = errorJsonObject["code"].toInt();
+        std::string errorMessage = errorJsonObject["message"]
+                .toString()
+                .toStdString();
+        DLOG(INFO) << "Error " + std::to_string(errorCode) + ": " + errorMessage;
         throw InvalidArgumentException();
     }
 

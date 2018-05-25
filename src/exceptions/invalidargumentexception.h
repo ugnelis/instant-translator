@@ -8,9 +8,9 @@
  */
 class InvalidArgumentException : public QException {
 public:
-    void raise() const { throw *this; }
+    inline void raise() const { throw *this; }
 
-    InvalidArgumentException *clone() const { return new InvalidArgumentException(*this); }
+    inline InvalidArgumentException *clone() const { return new InvalidArgumentException(*this); }
 };
 
 #endif //INSTANT_TRANSLATOR_INVALIDARGUMENTEXCEPTION_H
