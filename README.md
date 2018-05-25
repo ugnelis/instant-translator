@@ -30,6 +30,12 @@ key=AsjSAXXX
 format=text
 ```
 
+### Turn On Logs
+In this project gflags library isn't used. That is why environment variable `GLOG_logtostderr` has to be set in order to see logs.
+```bash
+GLOG_logtostderr=1 ./instant_translator
+```
+
 ### Translate by Pressing the Keyboard
 Currently, it's made that when clipboard (copy or cut operation) is changed then the app translates the text.
 
