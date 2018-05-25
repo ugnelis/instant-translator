@@ -54,8 +54,8 @@ QString GoogleAPI::translate(const QString &input,
         std::string errorMessage = errorJsonObject["message"]
                 .toString()
                 .toStdString();
-        DLOG(INFO) << "Error " + std::to_string(errorCode) + ": " + errorMessage;
-        throw InvalidArgumentException();
+        std::string exceptionMessage = "Error " + std::to_string(errorCode) + ": " + errorMessage;
+        throw std::invalid_argument(exceptionMessage);
     }
 
     QJsonArray translationsJsonArray = replyJsonObject["data"]
@@ -101,8 +101,8 @@ QStringList GoogleAPI::getSupportedLanguages() const {
         std::string errorMessage = errorJsonObject["message"]
                 .toString()
                 .toStdString();
-        DLOG(INFO) << "Error " + std::to_string(errorCode) + ": " + errorMessage;
-        throw InvalidArgumentException();
+        std::string exceptionMessage = "Error " + std::to_string(errorCode) + ": " + errorMessage;
+        throw std::invalid_argument(exceptionMessage);
     }
 
     QJsonArray languagesJsonArray = replyJsonObject["data"]

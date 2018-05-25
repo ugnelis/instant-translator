@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <stdexcept>
 #include <QMainWindow>
 #include <QClipboard>
 #include <QFuture>
@@ -8,6 +9,7 @@
 #include <QtConcurrent>
 #include <QStringList>
 #include <QMessageBox>
+#include <glog/logging.h>
 #include "apis/api.h"
 #include "apis/googleapi.h"
 #include "utils/language.h"

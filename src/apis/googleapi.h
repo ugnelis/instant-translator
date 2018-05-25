@@ -1,14 +1,13 @@
 #ifndef INSTANT_TRANSLATOR_GOOGLEAPI_H
 #define INSTANT_TRANSLATOR_GOOGLEAPI_H
 
+#include <stdexcept>
 #include <QObject>
 #include <QSettings>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <glog/logging.h>
 #include "api.h"
-#include "exceptions/invalidargumentexception.h"
 #include "utils/requestmanager.h"
 
 /**

@@ -132,8 +132,8 @@ QString MainWindow::runTranslation(API *api,
     QString outputString;
     try {
         outputString = api->translate(inputString, sourceLanguage, targetLanguage);
-    } catch (const InvalidArgumentException &e) {
-        showErrorBox("Text cannot be translated. Invalid API key.");
+    } catch (const std::invalid_argument &e) {
+        showErrorBox(e.what());
     }
 
     return outputString;
@@ -148,14 +148,15 @@ QStringList MainWindow::runGetSupportedLanguages(API *api) {
     QStringList supportedLanguages;
     try {
         supportedLanguages = api->getSupportedLanguages();
-    } catch (const InvalidArgumentException &e) {
-        showErrorBox("Languages list cannot be received. Invalid API key.");
+    } catch (const std::invalid_argument &e) {
+        showErrorBox(e.what());
     }
 
     return supportedLanguages;
 }
 
 void MainWindow::showErrorBox(const QString &message) {
+    DLOG(INFO) << message.toStdString();
     QMessageBox messageBox;
     messageBox.setText(message);
     messageBox.setIcon(QMessageBox::Warning);
