@@ -1,12 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <stdexcept>
 #include <QMainWindow>
 #include <QClipboard>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtConcurrent>
 #include <QStringList>
+#include <QMessageBox>
+#include <glog/logging.h>
 #include "apis/api.h"
 #include "apis/googleapi.h"
 #include "utils/language.h"
@@ -91,6 +94,12 @@ private:
      * @return Supported languages string list.
      */
     QStringList runGetSupportedLanguages(API *api);
+
+    /**
+     * Show error box.
+     * @param message Error message.
+     */
+    void showErrorBox(const QString &message);
 
     Ui::MainWindow *ui;     // MainWindow user interface.
     QClipboard *clipboard;  // Clipboard information.

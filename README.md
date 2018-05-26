@@ -1,4 +1,7 @@
-# instant-translator [![Build Status](https://travis-ci.org/ugnelis/instant-translator.svg?branch=master)](https://travis-ci.org/ugnelis/instant-translator) [![Coverage Status](https://coveralls.io/repos/github/ugnelis/instant-translator/badge.svg?branch=master)](https://coveralls.io/github/ugnelis/instant-translator?branch=master)
+# instant-translator
+[![Build Status](https://travis-ci.org/ugnelis/instant-translator.svg?branch=master)](https://travis-ci.org/ugnelis/instant-translator)
+[![Coverage Status](https://coveralls.io/repos/github/ugnelis/instant-translator/badge.svg?branch=master)](https://coveralls.io/github/ugnelis/instant-translator?branch=master)
+
 Translate words and sentences instantly. Program uses APIs of various translators.
 
 ## What Does the App Solve?
@@ -25,6 +28,12 @@ Example:
 [google]
 key=AsjSAXXX
 format=text
+```
+
+### Turn On Logs
+In this project gflags library isn't used. That is why environment variable `GLOG_logtostderr` has to be set in order to see logs.
+```bash
+GLOG_logtostderr=1 ./instant_translator
 ```
 
 ### Translate by Pressing the Keyboard

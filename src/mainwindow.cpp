@@ -125,20 +125,42 @@ QString MainWindow::runTranslation(API *api,
                                    const QString &sourceLanguage,
                                    const QString &targetLanguage) {
     if (api == nullptr) {
+        showErrorBox("Text cannot be translated. API is not set.");
         return QString();
     }
 
-    QString outputString = api->translate(inputString, sourceLanguage, targetLanguage);
+    QString outputString;
+    try {
+        outputString = api->translate(inputString, sourceLanguage, targetLanguage);
+    } catch (const std::invalid_argument &e) {
+        showErrorBox(e.what());
+    }
+
     return outputString;
 }
 
 QStringList MainWindow::runGetSupportedLanguages(API *api) {
     if (api == nullptr) {
+        showErrorBox("Languages list cannot be received. API is not set.");
         return QStringList();
     }
 
-    QStringList supportedLanguages = api->getSupportedLanguages();
+    QStringList supportedLanguages;
+    try {
+        supportedLanguages = api->getSupportedLanguages();
+    } catch (const std::invalid_argument &e) {
+        showErrorBox(e.what());
+    }
+
     return supportedLanguages;
+}
+
+void MainWindow::showErrorBox(const QString &message) {
+    DLOG(INFO) << message.toStdString();
+    QMessageBox messageBox;
+    messageBox.setText(message);
+    messageBox.setIcon(QMessageBox::Warning);
+    messageBox.exec();
 }
 
 void MainWindow::on_exitAction_triggered() {
