@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Load supported languages in the combo boxes.
     loadLanguagesInComboBoxes();
+
+    settingsDialog = new SettingsDialog(this);
 }
 
 MainWindow::~MainWindow() {
@@ -165,6 +167,12 @@ void MainWindow::showErrorBox(const QString &message) {
 
 void MainWindow::on_exitAction_triggered() {
     this->close();
+}
+
+void MainWindow::on_settingsAction_triggered() {
+    if (settingsDialog) {
+        settingsDialog->show();
+    }
 }
 
 void MainWindow::on_translateButton_clicked() {

@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef INSTANT_TRANSLATOR_MAINWINDOW_H
+#define INSTANT_TRANSLATOR_MAINWINDOW_H
 
 #include <stdexcept>
 #include <QMainWindow>
@@ -12,6 +12,7 @@
 #include <glog/logging.h>
 #include "apis/api.h"
 #include "apis/googleapi.h"
+#include "dialogs/settingsdialog.h"
 #include "utils/language.h"
 
 namespace Ui {
@@ -44,9 +45,14 @@ private slots:
     void onClipboardDataChanged();
 
     /**
-     * On exitAction is changed.
+     * On exitAction is triggered.
      */
     void on_exitAction_triggered();
+
+    /**
+     * On settingsAction is triggered.
+     */
+    void on_settingsAction_triggered();
 
     /**
      * On translateButton clicked.
@@ -102,9 +108,10 @@ private:
     void showErrorBox(const QString &message);
 
     Ui::MainWindow *ui;     // MainWindow user interface.
+    SettingsDialog *settingsDialog;
     QClipboard *clipboard;  // Clipboard information.
     API *api;               // Translation API.
     Language language;      // Language.
 };
 
-#endif // MAINWINDOW_H
+#endif // INSTANT_TRANSLATOR_MAINWINDOW_H
