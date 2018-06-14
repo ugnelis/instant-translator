@@ -41,7 +41,7 @@
    <property name="title">
     <string>APIs Settings</string>
    </property>
-   <widget class="QListWidget" name="apisList">
+   <widget class="QListWidget" name="apisListWidget">
     <property name="geometry">
      <rect>
       <x>10</x>

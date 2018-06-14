@@ -8,15 +8,15 @@ Language::Language(QObject *parent)
 Language::~Language() {
 }
 
-QString Language::getName(QString code) {
+QString Language::getName(const QString &code) const {
     return hash.value(code);
 }
 
-QString Language::getCode(QString name) {
+QString Language::getCode(const QString &name) const {
     return hash.key(name);
 }
 
-QStringList Language::getLanguages(QStringList codeList) {
+QStringList Language::getLanguages(const QStringList &codeList) const {
     QStringList nameList;
     foreach (QString code, codeList) {
         nameList.append(hash.value(code));
@@ -24,7 +24,7 @@ QStringList Language::getLanguages(QStringList codeList) {
     return nameList;
 }
 
-QStringList Language::getCodes(QStringList nameList) {
+QStringList Language::getCodes(const QStringList &nameList) const {
     QStringList codeList;
     foreach (QString name, nameList) {
         codeList.append(hash.key(name));
@@ -32,7 +32,7 @@ QStringList Language::getCodes(QStringList nameList) {
     return codeList;
 }
 
-void Language::readFromJsonFile(QString jsonFile) {
+void Language::readFromJsonFile(const QString &jsonFile) {
     // Read JSON file.
     QString jsonString;
     QFile file;

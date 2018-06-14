@@ -2,6 +2,8 @@
 #define INSTANT_TRANSLATOR_SETTINGSDIALOG_H
 
 #include <QDialog>
+#include <QListWidgetItem>
+#include "utils/apisettings.h"
 
 namespace Ui {
     class SettingsDialog;
@@ -25,8 +27,44 @@ public:
      */
     ~SettingsDialog();
 
+private slots:
+
+    /**
+     * On apisListWidget is current item changed.
+     * @param current Current list item.
+     * @param previous Previous list item.
+     */
+    void on_apisListWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+    /**
+     * On settingsButtonBox is accepted.
+     */
+    void on_settingsButtonBox_accepted();
+
+    /**
+     * On apiKeyLineEdit is text changed.
+     */
+    void on_apiKeyLineEdit_textChanged();
+
+    /**
+     * On apiKeyLineEdit is text changed.
+     */
+    void on_defaultSourceLanguageLineEdit_textChanged();
+
+    /**
+     * On apiKeyLineEdit is text changed.
+     */
+    void on_defaultTargetLanguageLineEdit_textChanged();
+
 private:
+    /**
+     * Save settings data.
+     */
+    void save();
+
     Ui::SettingsDialog *ui;
+    QList<APISettings *> apiSettingsList;
+    QList<QListWidgetItem *> apiSettingsListWidgetItemList;
 };
 
 #endif // INSTANT_TRANSLATOR_SETTINGSDIALOG_H

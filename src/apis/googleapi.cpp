@@ -14,7 +14,7 @@ QString GoogleAPI::translate(const QString &input,
         return QString();
     }
 
-    QSettings settings(":/resources/configs/api.ini", QSettings::IniFormat);
+    QSettings settings;
     QString key = settings.value("google/key").toString();
     QString format = settings.value("google/format").toString();
 
@@ -73,7 +73,7 @@ QString GoogleAPI::translate(const QString &input,
 }
 
 QStringList GoogleAPI::getSupportedLanguages() const {
-    QSettings settings(":/resources/configs/api.ini", QSettings::IniFormat);
+    QSettings settings;
     QString key = settings.value("google/key").toString();
 
     // Format GET url string.

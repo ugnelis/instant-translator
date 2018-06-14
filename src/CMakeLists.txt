@@ -45,6 +45,8 @@ set(SOURCE_FILES
         dialogs/settingsdialog.cpp
         dialogs/settingsdialog.h
         dialogs/settingsdialog.ui
+        utils/apisettings.cpp
+        utils/apisettings.h
         utils/language.cpp
         utils/language.h
         utils/requestmanager.cpp

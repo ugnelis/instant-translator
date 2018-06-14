@@ -1,7 +1,6 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
     <qresource>
-        <file>resources/configs/api.ini</file>
         <file>resources/languages.json</file>
     </qresource>
 </RCC>

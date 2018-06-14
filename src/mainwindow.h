@@ -108,7 +108,6 @@ private:
     void showErrorBox(const QString &message);
 
     Ui::MainWindow *ui;     // MainWindow user interface.
-    SettingsDialog *settingsDialog;
     QClipboard *clipboard;  // Clipboard information.
     API *api;               // Translation API.
     Language language;      // Language.
