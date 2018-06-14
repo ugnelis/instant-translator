@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
@@ -14,21 +15,33 @@ MainWindow::MainWindow(QWidget *parent) :
             this,
             &MainWindow::onClipboardDataChanged
     );
+    // App settings.
+    appSettings = new AppSettings(this);
 
-    // Set Google Translator API.
-    api = new GoogleAPI(this);
+    APISettings *googleAPISettings = new APISettings(this, "google", "Google Translate API");
+    googleAPISettings->readSettings();
+    appSettings->addApiSettings(googleAPISettings);
 
-    // Load supported languages in the combo boxes.
-    loadLanguagesInComboBoxes();
+    APISettings *tempAPISettings = new APISettings(this, "temp", "Temp API");
+    tempAPISettings->readSettings();
+    appSettings->addApiSettings(tempAPISettings);
+
+    // Set default API.
+    QSettings settings;
+    appSettings->setDefaultApi(settings.value("default_api", "google").toString());
+
+    // Load API.
+    loadApi();
 }
 
 MainWindow::~MainWindow() {
     // Save used translation languages.
-    QSettings settings;
+    APISettings *currentApiSettings = appSettings->getDefaultApi();
     QString sourceLanguage = language.getCode(ui->sourceLanguagesComboBox->currentText());
     QString targetLanguage = language.getCode(ui->targetLanguagesComboBox->currentText());
-    settings.setValue("source", sourceLanguage);
-    settings.setValue("target", targetLanguage);
+    currentApiSettings->setDefaultSourceLanguage(sourceLanguage);
+    currentApiSettings->setDefaultTargetLanguage(targetLanguage);
+    appSettings->save();
 
     delete ui;
     delete api;
@@ -43,6 +56,30 @@ void MainWindow::onClipboardDataChanged() {
 
     // Perform translation.
     doTranslation();
+}
+
+void MainWindow::loadApi() {
+    if (appSettings == nullptr) {
+        return;
+    }
+
+    // TODO(ugnelis): Fix this.
+//    if (api != nullptr) {
+//        delete api;
+//    }
+
+    APISettings *defaultApiSettings = appSettings->getDefaultApi();
+
+    if (defaultApiSettings->getName() == "google") {
+        api = new GoogleAPI();
+        qDebug() << "google API";
+    } else if (defaultApiSettings->getName() == "temp") {
+        api = new TempAPI();
+        qDebug() << "temp API";
+    }
+
+    // Load supported languages in the combo boxes.
+    loadLanguagesInComboBoxes();
 }
 
 void MainWindow::doTranslation() {
@@ -81,6 +118,10 @@ void MainWindow::swapLanguagesInComboBoxes() {
 }
 
 void MainWindow::loadLanguagesInComboBoxes() {
+    // Clear data from the combo boxes.
+    ui->sourceLanguagesComboBox->clear();
+    ui->targetLanguagesComboBox->clear();
+
     // Get API supported languages.
     QFutureWatcher<QStringList> *futureWatcher = new QFutureWatcher<QStringList>(this);
     QFuture<QStringList> future = QtConcurrent::run(
@@ -100,9 +141,9 @@ void MainWindow::loadLanguagesInComboBoxes() {
                 ui->targetLanguagesComboBox->addItems(languageNameList);
 
                 // Load saved translation languages.
-                QSettings settings;
-                QString sourceLanguage = settings.value("source", "de").toString();
-                QString targetLanguage = settings.value("target", "en").toString();
+                APISettings *defaultApiSettings = appSettings->getDefaultApi();
+                QString sourceLanguage = defaultApiSettings->getDefaultSourceLanguage();
+                QString targetLanguage = defaultApiSettings->getDefaultTargetLanguage();
 
                 // Set source language.
                 int sourceLanguageIndex = languageCodeList.indexOf(sourceLanguage);
@@ -168,9 +209,10 @@ void MainWindow::on_exitAction_triggered() {
 }
 
 void MainWindow::on_settingsAction_triggered() {
-    SettingsDialog *settingsDialog = new SettingsDialog(this);
+    SettingsDialog *settingsDialog = new SettingsDialog(this, appSettings);
     settingsDialog->setAttribute(Qt::WA_DeleteOnClose);
     settingsDialog->exec();
+    loadApi();
 }
 
 void MainWindow::on_translateButton_clicked() {

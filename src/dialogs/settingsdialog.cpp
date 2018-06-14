@@ -1,35 +1,29 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
-SettingsDialog::SettingsDialog(QWidget *parent) :
+SettingsDialog::SettingsDialog(QWidget *parent, AppSettings *appSettings) :
         QDialog(parent),
-        ui(new Ui::SettingsDialog) {
+        ui(new Ui::SettingsDialog),
+        appSettings(appSettings) {
     ui->setupUi(this);
 
-    APISettings *googleAPISettings = new APISettings(this, "google", "Google Translate API");
-    googleAPISettings->readSettings();
-    apiSettingsList.append(googleAPISettings);
-
-    APISettings *tempAPISettings = new APISettings(this, "temp", "Temp");
-    tempAPISettings->readSettings();
-    apiSettingsList.append(tempAPISettings);
-
-    for (int i = 0; i < apiSettingsList.count(); ++i) {
-        QListWidgetItem *listWidgetItem = new QListWidgetItem(apiSettingsList.at(i)->getFullName());
-        apiSettingsListWidgetItemList.append(listWidgetItem);
-        ui->apisListWidget->addItem(listWidgetItem);
-    }
+    loadSettings();
 }
 
 SettingsDialog::~SettingsDialog() {
     delete ui;
 }
 
+void SettingsDialog::setAppSettings(AppSettings *appSettings) {
+    this->appSettings = appSettings;
+    loadSettings();
+}
+
 void SettingsDialog::on_apisListWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
     int currentIndex = apiSettingsListWidgetItemList.indexOf(current);
 
     if (currentIndex >= 0) {
-        APISettings *apiSettings = apiSettingsList.at(currentIndex);
+        APISettings *apiSettings = appSettings->getApiSettingsList().at(currentIndex);
         ui->apiKeyLineEdit->setText(apiSettings->getApiKey());
         ui->defaultSourceLanguageLineEdit->setText(apiSettings->getDefaultSourceLanguage());
         ui->defaultTargetLanguageLineEdit->setText(apiSettings->getDefaultTargetLanguage());
@@ -37,39 +31,46 @@ void SettingsDialog::on_apisListWidget_currentItemChanged(QListWidgetItem *curre
 }
 
 void SettingsDialog::on_settingsButtonBox_accepted() {
-    save();
+    saveSettings();
 }
 
-void SettingsDialog::on_apiKeyLineEdit_textChanged() {
+void SettingsDialog::on_settingsButtonBox_clicked(QAbstractButton *button) {
+    if ((QPushButton *) button == ui->settingsButtonBox->button(QDialogButtonBox::Apply)) {
+        saveSettings();
+    }
+}
+
+void SettingsDialog::saveSettings() {
     int currentIndex = apiSettingsListWidgetItemList.indexOf(ui->apisListWidget->currentItem());
 
     if (currentIndex >= 0) {
-        APISettings *apiSettings = apiSettingsList.at(currentIndex);
+        APISettings *apiSettings = appSettings->getApiSettingsList().at(currentIndex);
         apiSettings->setApiKey(ui->apiKeyLineEdit->text());
-    }
-}
-
-void SettingsDialog::on_defaultSourceLanguageLineEdit_textChanged() {
-    int currentIndex = apiSettingsListWidgetItemList.indexOf(ui->apisListWidget->currentItem());
-
-    if (currentIndex >= 0) {
-        APISettings *apiSettings = apiSettingsList.at(currentIndex);
         apiSettings->setDefaultSourceLanguage(ui->defaultSourceLanguageLineEdit->text());
-    }
-}
-
-void SettingsDialog::on_defaultTargetLanguageLineEdit_textChanged() {
-    int currentIndex = apiSettingsListWidgetItemList.indexOf(ui->apisListWidget->currentItem());
-
-    if (currentIndex >= 0) {
-        APISettings *apiSettings = apiSettingsList.at(currentIndex);
         apiSettings->setDefaultTargetLanguage(ui->defaultTargetLanguageLineEdit->text());
     }
+
+    int defaultApiIndex = ui->defaultApiComboBox->currentIndex();
+    QString defaultApiName = appSettings->getApiSettingsList().at(defaultApiIndex)->getName();
+    appSettings->setDefaultApi(defaultApiName);
+
+    appSettings->save();
+
 }
 
-void SettingsDialog::save() {
-    for (int i = 0; i < apiSettingsList.count(); ++i) {
-        APISettings *apiSettings = apiSettingsList.at(i);
-        apiSettings->writeSettings();
+void SettingsDialog::loadSettings() {
+    for (int i = 0; i < appSettings->getApiSettingsList().count(); ++i) {
+        APISettings *apiSettings = appSettings->getApiSettingsList().at(i);
+
+        QListWidgetItem *listWidgetItem = new QListWidgetItem(apiSettings->getFullName());
+        apiSettingsListWidgetItemList.append(listWidgetItem);
+        ui->apisListWidget->addItem(listWidgetItem);
+
+        ui->defaultApiComboBox->addItem(apiSettings->getFullName());
+        QSettings settings;
+        QString defaultApiName = settings.value("default_api").toString();
+        if (apiSettings->getName() == defaultApiName) {
+            ui->defaultApiComboBox->setCurrentIndex(i);
+        }
     }
 }

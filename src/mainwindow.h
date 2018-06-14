@@ -8,11 +8,14 @@
 #include <QFutureWatcher>
 #include <QtConcurrent>
 #include <QStringList>
+#include <QSettings>
 #include <QMessageBox>
 #include <glog/logging.h>
 #include "apis/api.h"
 #include "apis/googleapi.h"
+#include "apis/tempapi.h"
 #include "dialogs/settingsdialog.h"
+#include "utils/appsettings.h"
 #include "utils/language.h"
 
 namespace Ui {
@@ -66,6 +69,11 @@ private slots:
 
 private:
     /**
+     * Load translation API.
+     */
+    void loadApi();
+
+    /**
      * Do translation.
      */
     void doTranslation();
@@ -107,10 +115,11 @@ private:
      */
     void showErrorBox(const QString &message);
 
-    Ui::MainWindow *ui;     // MainWindow user interface.
-    QClipboard *clipboard;  // Clipboard information.
-    API *api;               // Translation API.
-    Language language;      // Language.
+    Ui::MainWindow *ui;         // MainWindow user interface.
+    QClipboard *clipboard;      // Clipboard information.
+    API *api;                   // Translation API.
+    AppSettings *appSettings;    // App settings.
+    Language language;          // Language.
 };
 
 #endif // INSTANT_TRANSLATOR_MAINWINDOW_H

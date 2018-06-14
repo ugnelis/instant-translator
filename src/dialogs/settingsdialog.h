@@ -3,7 +3,10 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QAbstractButton>
+#include <QSettings>
 #include "utils/apisettings.h"
+#include "utils/appsettings.h"
 
 namespace Ui {
     class SettingsDialog;
@@ -19,13 +22,20 @@ public:
     /**
      * Constructs an object with parent object parent.
      * @param parent Parent of an object may be viewed as the object's owner.
+     * @param appSettings App settings.
      */
-    explicit SettingsDialog(QWidget *parent = nullptr);
+    SettingsDialog(QWidget *parent, AppSettings *appSettings);
 
     /**
      * Destructor.
      */
     ~SettingsDialog();
+
+    /**
+     * Set App settings.
+     * @param appSettings App settings.
+     */
+    void setAppSettings(AppSettings *appSettings);
 
 private slots:
 
@@ -42,28 +52,24 @@ private slots:
     void on_settingsButtonBox_accepted();
 
     /**
-     * On apiKeyLineEdit is text changed.
+     * On settingsButtonBox is clicked;
+     * @param button Button.
      */
-    void on_apiKeyLineEdit_textChanged();
-
-    /**
-     * On apiKeyLineEdit is text changed.
-     */
-    void on_defaultSourceLanguageLineEdit_textChanged();
-
-    /**
-     * On apiKeyLineEdit is text changed.
-     */
-    void on_defaultTargetLanguageLineEdit_textChanged();
+    void on_settingsButtonBox_clicked(QAbstractButton *button);
 
 private:
     /**
      * Save settings data.
      */
-    void save();
+    void saveSettings();
+
+    /**
+     * Load appSettings.
+     */
+    void loadSettings();
 
     Ui::SettingsDialog *ui;
-    QList<APISettings *> apiSettingsList;
+    AppSettings *appSettings;
     QList<QListWidgetItem *> apiSettingsListWidgetItemList;
 };
 

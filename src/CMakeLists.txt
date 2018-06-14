@@ -42,11 +42,15 @@ set(SOURCE_FILES
         apis/api.h
         apis/googleapi.cpp
         apis/googleapi.h
+        apis/tempapi.cpp
+        apis/tempapi.h
         dialogs/settingsdialog.cpp
         dialogs/settingsdialog.h
         dialogs/settingsdialog.ui
         utils/apisettings.cpp
         utils/apisettings.h
+        utils/appsettings.cpp
+        utils/appsettings.h
         utils/language.cpp
         utils/language.h
         utils/requestmanager.cpp
