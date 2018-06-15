@@ -1,10 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent, AppSettings *appSettings) :
         QMainWindow(parent),
-        ui(new Ui::MainWindow) {
+        ui(new Ui::MainWindow),
+        appSettings(appSettings) {
     ui->setupUi(this);
 
     clipboard = QApplication::clipboard();
@@ -15,20 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
             this,
             &MainWindow::onClipboardDataChanged
     );
-    // App settings.
-    appSettings = new AppSettings(this);
-
-    APISettings *googleAPISettings = new APISettings(this, "google", "Google Translate API");
-    googleAPISettings->readSettings();
-    appSettings->addApiSettings(googleAPISettings);
-
-    APISettings *tempAPISettings = new APISettings(this, "temp", "Temp API");
-    tempAPISettings->readSettings();
-    appSettings->addApiSettings(tempAPISettings);
-
-    // Set default API.
-    QSettings settings;
-    appSettings->setDefaultApi(settings.value("default_api", "google").toString());
 
     // Load API.
     loadApi();
@@ -72,10 +58,8 @@ void MainWindow::loadApi() {
 
     if (defaultApiSettings->getName() == "google") {
         api = new GoogleAPI();
-        qDebug() << "google API";
     } else if (defaultApiSettings->getName() == "temp") {
         api = new TempAPI();
-        qDebug() << "temp API";
     }
 
     // Load supported languages in the combo boxes.

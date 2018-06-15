@@ -32,8 +32,9 @@ public:
     /**
      * Constructs an object with parent object parent.
      * @param parent Parent of an object may be viewed as the object's owner.
+     * @param appSettings App settings.
      */
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent, AppSettings *appSettings);
 
     /**
      * Destructor.
