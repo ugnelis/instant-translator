@@ -1,7 +1,7 @@
 #include "appsettings.h"
 
 AppSettings::AppSettings(QObject *parent)
-        : QObject(parent) {
+        : QObject(parent), defaultApi(nullptr) {
 }
 
 AppSettings::~AppSettings() {
@@ -47,8 +47,8 @@ void AppSettings::save() {
         apiSettings->writeSettings();
     }
 
-    QSettings settings;
     if (defaultApi != nullptr) {
+        QSettings settings;
         settings.setValue("default_api", defaultApi->getName());
     }
 }

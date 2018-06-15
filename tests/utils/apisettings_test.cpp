@@ -67,7 +67,6 @@ TEST(APISettingsTests, getDefaultTargetLanguage_checkIfDefaultTargetLanguageIsSe
     ASSERT_EQ("en", apiSettings.getDefaultTargetLanguage());
 }
 
-
 TEST(APISettingsTests, readSettings_checkIfValuesAreRead_True) {
     QSettings::setDefaultFormat(QSettings::IniFormat);
     QApplication::setOrganizationName("instant_translator");
@@ -99,14 +98,14 @@ TEST(APISettingsTests, readSettings_checkIfValuesAreRead_True) {
     ASSERT_EQ(defaultTargetLanguage, apiSettings.getDefaultTargetLanguage());
 }
 
-TEST(APISettingsTests, readSettings_checkIfExceptionIsThrown_True) {
+TEST(APISettingsTests, readSettings_nameIsNotSet_ExceptionThrown) {
 
     APISettings apiSettings;
     try {
         apiSettings.readSettings();
         FAIL();
     } catch (const std::invalid_argument &e) {
-        ASSERT_EQ(e.what(), std::string("API name has not been set."));
+        ASSERT_EQ(std::string("API name has not been set."), e.what());
     }
 }
 
@@ -144,13 +143,13 @@ TEST(APISettingsTests, writeSettings_checkIfValuesAreWritten_True) {
     ASSERT_EQ(defaultTargetLanguage, actualDefaultTargetLanguage);
 }
 
-TEST(APISettingsTests, writeSettings_checkIfExceptionIsThrown_True) {
+TEST(APISettingsTests, writeSettings_nameIstNotSet_ExceptionThrown) {
 
     APISettings apiSettings;
     try {
         apiSettings.writeSettings();
         FAIL();
     } catch (const std::invalid_argument &e) {
-        ASSERT_EQ(e.what(), std::string("API name has not been set."));
+        ASSERT_EQ(std::string("API name has not been set."), e.what());
     }
 }

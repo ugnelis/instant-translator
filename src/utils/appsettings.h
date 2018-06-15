@@ -36,7 +36,7 @@ public:
     QList<APISettings *> getApiSettingsList() const;
 
     /**
-     * Set default API.
+     * Set default API. If API doesn't exists, it is being add.
      * @param apiSettings API settings.
      */
     void setDefaultApi(APISettings *apiSettings);
