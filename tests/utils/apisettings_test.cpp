@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <stdexcept>
 #include <QApplication>
 #include <QSettings>
 #include <QString>
@@ -67,7 +68,7 @@ TEST(APISettingsTests, getDefaultTargetLanguage_checkIfDefaultTargetLanguageIsSe
 }
 
 
-TEST(APISettingsTests, readSettings_checkIfValuesAreRead_True_True) {
+TEST(APISettingsTests, readSettings_checkIfValuesAreRead_True) {
     QSettings::setDefaultFormat(QSettings::IniFormat);
     QApplication::setOrganizationName("instant_translator");
     QApplication::setApplicationName("unit_tests");
@@ -98,7 +99,18 @@ TEST(APISettingsTests, readSettings_checkIfValuesAreRead_True_True) {
     ASSERT_EQ(defaultTargetLanguage, apiSettings.getDefaultTargetLanguage());
 }
 
-TEST(APISettingsTests, writeSettings_checkIfValuesAreWritten) {
+TEST(APISettingsTests, readSettings_checkIfExceptionIsThrown_True) {
+
+    APISettings apiSettings;
+    try {
+        apiSettings.readSettings();
+        FAIL();
+    } catch (const std::invalid_argument &e) {
+        ASSERT_EQ(e.what(), std::string("API name has not been set."));
+    }
+}
+
+TEST(APISettingsTests, writeSettings_checkIfValuesAreWritten_True) {
     QSettings::setDefaultFormat(QSettings::IniFormat);
     QApplication::setOrganizationName("instant_translator");
     QApplication::setApplicationName("unit_tests");
@@ -130,4 +142,15 @@ TEST(APISettingsTests, writeSettings_checkIfValuesAreWritten) {
     ASSERT_EQ(textType, actualTextType);
     ASSERT_EQ(defaultSourceLanguage, actualDefaultSourceLanguage);
     ASSERT_EQ(defaultTargetLanguage, actualDefaultTargetLanguage);
+}
+
+TEST(APISettingsTests, writeSettings_checkIfExceptionIsThrown_True) {
+
+    APISettings apiSettings;
+    try {
+        apiSettings.writeSettings();
+        FAIL();
+    } catch (const std::invalid_argument &e) {
+        ASSERT_EQ(e.what(), std::string("API name has not been set."));
+    }
 }
