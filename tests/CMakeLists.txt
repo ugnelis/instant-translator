@@ -33,6 +33,9 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # Source files.
 set(SOURCE_FILES
+        utils/apisettings_test.cpp
+        ${PROJECT_SOURCE_DIR}/src/utils/apisettings.cpp
+        ${PROJECT_SOURCE_DIR}/src/utils/apisettings.h
         utils/customnetworkreply_test.cpp
         ${PROJECT_SOURCE_DIR}/src/utils/customnetworkreply.cpp
         ${PROJECT_SOURCE_DIR}/src/utils/customnetworkreply.h
