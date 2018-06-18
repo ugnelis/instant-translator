@@ -116,11 +116,12 @@ private:
      */
     void showErrorBox(const QString &message);
 
-    Ui::MainWindow *ui;         // MainWindow user interface.
-    QClipboard *clipboard;      // Clipboard information.
-    API *api;                   // Translation API.
-    AppSettings *appSettings;    // App settings.
-    Language language;          // Language.
+    Ui::MainWindow *ui;                 // MainWindow user interface.
+    QClipboard *clipboard;              // Clipboard information.
+    API *api;                           // Translation API.
+    APISettings *currentApiSettings;    // Current API settings.
+    AppSettings *appSettings;           // App settings.
+    Language language;                  // Language.
 };
 
 #endif // INSTANT_TRANSLATOR_MAINWINDOW_H

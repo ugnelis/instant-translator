@@ -33,7 +33,7 @@ void AppSettings::setDefaultApi(QString name) {
         }
     }
 
-    std::string exceptionMessage = "API with name '" + name.toStdString() + "' does not exist";
+    std::string exceptionMessage = "API with name '" + name.toStdString() + "' does not exist.";
     throw std::invalid_argument(exceptionMessage);
 }
 

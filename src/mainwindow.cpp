@@ -49,16 +49,19 @@ void MainWindow::loadApi() {
         return;
     }
 
-    // TODO(ugnelis): Fix this.
-//    if (api != nullptr) {
-//        delete api;
+    if (currentApiSettings == appSettings->getDefaultApi()) {
+        return;
+    }
+
+//    if (currentApiSettings != nullptr) {
+//        api->deleteLater();
 //    }
 
-    APISettings *defaultApiSettings = appSettings->getDefaultApi();
+    currentApiSettings = appSettings->getDefaultApi();
 
-    if (defaultApiSettings->getName() == "google") {
+    if (currentApiSettings->getName() == "google") {
         api = new GoogleAPI();
-    } else if (defaultApiSettings->getName() == "temp") {
+    } else if (currentApiSettings->getName() == "temp") {
         api = new TempAPI();
     }
 

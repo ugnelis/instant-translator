@@ -70,7 +70,7 @@ TEST(AppSettingsTests, setDefaultApi_apiDoesNotExist_ExceptionThrown) {
         appSettings->setDefaultApi("api_1");
         FAIL();
     } catch (const std::invalid_argument &e) {
-        ASSERT_EQ(std::string("API with name 'api_1' does not exist"), e.what());
+        ASSERT_EQ(std::string("API with name 'api_1' does not exist."), e.what());
     }
     delete appSettings;
 }
