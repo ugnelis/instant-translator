@@ -120,10 +120,10 @@ private:
 
     Ui::MainWindow *ui;                 // MainWindow user interface.
     QClipboard *clipboard;              // Clipboard information.
-    QList<API *> apis;                  // Translation APIs.
-    API *currentApi;                    // Current API.
     APISettings *currentApiSettings;    // Current API settings.
     AppSettings *appSettings;           // App settings.
+    QList<API *> apis;                  // Translation APIs.
+    API *currentApi;                    // Current API.
     Language language;                  // Language.
 };
 
