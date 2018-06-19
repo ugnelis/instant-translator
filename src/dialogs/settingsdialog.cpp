@@ -25,6 +25,7 @@ void SettingsDialog::on_apisListWidget_currentItemChanged(QListWidgetItem *curre
     if (currentIndex >= 0) {
         APISettings *apiSettings = appSettings->getApiSettingsList().at(currentIndex);
         ui->apiKeyLineEdit->setText(apiSettings->getApiKey());
+        ui->textTypeLineEdit->setText(apiSettings->getTextType());
         ui->defaultSourceLanguageLineEdit->setText(apiSettings->getDefaultSourceLanguage());
         ui->defaultTargetLanguageLineEdit->setText(apiSettings->getDefaultTargetLanguage());
     }
@@ -46,6 +47,7 @@ void SettingsDialog::saveSettings() {
     if (currentIndex >= 0) {
         APISettings *apiSettings = appSettings->getApiSettingsList().at(currentIndex);
         apiSettings->setApiKey(ui->apiKeyLineEdit->text());
+        apiSettings->setTextType(ui->textTypeLineEdit->text());
         apiSettings->setDefaultSourceLanguage(ui->defaultSourceLanguageLineEdit->text());
         apiSettings->setDefaultTargetLanguage(ui->defaultTargetLanguageLineEdit->text());
     }
@@ -55,7 +57,6 @@ void SettingsDialog::saveSettings() {
     appSettings->setDefaultApi(defaultApiName);
 
     appSettings->save();
-
 }
 
 void SettingsDialog::loadSettings() {
