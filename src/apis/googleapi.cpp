@@ -1,7 +1,7 @@
 #include "googleapi.h"
 
 GoogleAPI::GoogleAPI(QObject *parent)
-        : QObject(parent) {
+        : API(parent) {
 }
 
 GoogleAPI::~GoogleAPI() {

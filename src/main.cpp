@@ -1,9 +1,26 @@
 #include <QApplication>
 #include <QSettings>
+#include <QList>
 #include <glog/logging.h>
 #include "mainwindow.h"
+#include "apis/api.h"
+#include "apis/googleapi.h"
+#include "apis/tempapi.h"
 #include "utils/apisettings.h"
 #include "utils/appsettings.h"
+
+/**
+ * Create App settings.
+ * @param parent Parent of an object may be viewed as the object's owner.
+ * @return App settings object.
+ */
+AppSettings *createAppSettings(QObject *parent);
+
+/**
+ * Create APIs.
+ * @return Created APIs list.
+ */
+QList<API *> createAPIs();
 
 int main(int argc, char *argv[]) {
     // Logging tool.
@@ -17,8 +34,20 @@ int main(int argc, char *argv[]) {
     QApplication::setApplicationName("instant_translator");
 
     // App settings.
+    AppSettings *appSettings = createAppSettings(&application);
+
+    QList<API *> apis = createAPIs();
+
+    // Main window.
+    MainWindow mainWindow(nullptr, appSettings, apis);
+    mainWindow.show();
+
+    return application.exec();
+}
+
+AppSettings *createAppSettings(QObject *parent) {
     AppSettings *appSettings = new AppSettings();
-    appSettings->setParent(&application);
+    appSettings->setParent(parent);
 
     // APIs definition.
     APISettings *googleAPISettings = new APISettings(appSettings, "google", "Google Translate API");
@@ -33,9 +62,13 @@ int main(int argc, char *argv[]) {
     QSettings settings;
     appSettings->setDefaultApi(settings.value("default_api", "google").toString());
 
-    // Main window.
-    MainWindow mainWindow(nullptr, appSettings);
-    mainWindow.show();
+    return appSettings;
+}
 
-    return application.exec();
+QList<API *> createAPIs() {
+    QList<API *> apis;
+    apis.append(new GoogleAPI());
+    apis.append(new TempAPI());
+
+    return apis;
 }

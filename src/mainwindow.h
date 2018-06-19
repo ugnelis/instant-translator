@@ -10,6 +10,7 @@
 #include <QStringList>
 #include <QSettings>
 #include <QMessageBox>
+#include <QList>
 #include <glog/logging.h>
 #include "apis/api.h"
 #include "apis/googleapi.h"
@@ -33,8 +34,9 @@ public:
      * Constructs an object with parent object parent.
      * @param parent Parent of an object may be viewed as the object's owner.
      * @param appSettings App settings.
+     * @param apis APIs list.
      */
-    explicit MainWindow(QWidget *parent, AppSettings *appSettings);
+    explicit MainWindow(QWidget *parent, AppSettings *appSettings, const QList<API *> &apis);
 
     /**
      * Destructor.
@@ -118,7 +120,8 @@ private:
 
     Ui::MainWindow *ui;                 // MainWindow user interface.
     QClipboard *clipboard;              // Clipboard information.
-    API *api;                           // Translation API.
+    QList<API *> apis;                  // Translation APIs.
+    API *currentApi;                    // Current API.
     APISettings *currentApiSettings;    // Current API settings.
     AppSettings *appSettings;           // App settings.
     Language language;                  // Language.

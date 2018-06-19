@@ -1,16 +1,13 @@
 #ifndef INSTANT_TRANSLATOR_TEMPAPI_H
 #define INSTANT_TRANSLATOR_TEMPAPI_H
 
-#include <QObject>
 #include <QSettings>
 #include "api.h"
 
 /**
  * Temporary API implementation class.
  */
-class TempAPI : public QObject, public API {
-Q_OBJECT
-Q_INTERFACES(API)
+class TempAPI : public API {
 public:
     /**
      * Constructs an object with parent object parent.

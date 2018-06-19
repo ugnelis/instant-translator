@@ -1,7 +1,7 @@
 #include "tempapi.h"
 
 TempAPI::TempAPI(QObject *parent)
-        : QObject(parent) {
+        : API(parent) {
 }
 
 TempAPI::~TempAPI() {

@@ -1,10 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent, AppSettings *appSettings) :
+MainWindow::MainWindow(QWidget *parent, AppSettings *appSettings, const QList<API *> &apis) :
         QMainWindow(parent),
         ui(new Ui::MainWindow),
-        appSettings(appSettings) {
+        appSettings(appSettings),
+        apis(apis) {
     ui->setupUi(this);
 
     clipboard = QApplication::clipboard();
@@ -30,7 +31,7 @@ MainWindow::~MainWindow() {
     appSettings->save();
 
     delete ui;
-    delete api;
+    delete currentApi;
 }
 
 void MainWindow::onClipboardDataChanged() {
@@ -53,17 +54,15 @@ void MainWindow::loadApi() {
         return;
     }
 
-//    if (currentApiSettings != nullptr) {
-//        api->deleteLater();
-//    }
-
     currentApiSettings = appSettings->getDefaultApi();
 
-    if (currentApiSettings->getName() == "google") {
-        api = new GoogleAPI();
-    } else if (currentApiSettings->getName() == "temp") {
-        api = new TempAPI();
+    int apiIndex = appSettings->getApiSettingsList().indexOf(appSettings->getDefaultApi());
+    if (apiIndex >= appSettings->getApiSettingsList().count()) {
+        showErrorBox("The number of defined APIs' settings is larger than actually defined APIs.");
+        return;
     }
+
+    currentApi = apis.at(apiIndex);
 
     // Load supported languages in the combo boxes.
     loadLanguagesInComboBoxes();
@@ -80,7 +79,7 @@ void MainWindow::doTranslation() {
     QFuture<QString> future = QtConcurrent::run(
             this,
             &MainWindow::runTranslation,
-            api,
+            currentApi,
             inputString,
             sourceLanguage,
             targetLanguage
@@ -114,7 +113,7 @@ void MainWindow::loadLanguagesInComboBoxes() {
     QFuture<QStringList> future = QtConcurrent::run(
             this,
             &MainWindow::runGetSupportedLanguages,
-            api
+            currentApi
     );
 
     // Load API supported languages to the combo boxes.
