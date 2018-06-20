@@ -21,7 +21,7 @@ Desktop application that is able to translate the content of web pages and dekst
 * [Google Translate API](https://cloud.google.com/translate/)
 
 ## How to Use?
-### Add API Key
+### Add an API Key
 First of all, you need to get API key for desired API. Then it can be added in *Settings* dialog (in menu *File*->*Settings*)
 
 ### Configuration File
