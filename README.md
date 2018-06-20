@@ -21,13 +21,30 @@ Desktop application that is able to translate the content of web pages and dekst
 * [Google Translate API](https://cloud.google.com/translate/)
 
 ## How to Use?
-### Add API key
-First of all, you need to get API key for desired API. Then put it in [src/resources/configs/api.ini](src/resources/configs/api.ini) file.
-Example:
+### Add API Key
+First of all, you need to get API key for desired API. Then it can be added in *Settings* dialog (in menu *File*->*Settings*)
+
+### Configuration File
+Configuration file can be found in:
+* In Linux: `$HOME/.config/instant_translator/instant_translator.ini`
+* In Windows: `%APPDATA%\instant_translator\instant_translator.ini`
+
+Configuration file example:
 ``` ini
+[General]
+default_api=google
+
 [google]
-key=AsjSAXXX
-format=text
+key=API_KEY
+text_type=text
+source=lt
+target=en
+
+[temp]
+key=API_KEY
+text_type=text
+source=de
+target=lt
 ```
 
 ### Turn On Logs

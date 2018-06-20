@@ -50,10 +50,6 @@ void MainWindow::loadApi() {
         return;
     }
 
-    if (currentApiSettings == appSettings->getDefaultApi()) {
-        return;
-    }
-
     currentApiSettings = appSettings->getDefaultApi();
 
     int apiIndex = appSettings->getApiSettingsList().indexOf(appSettings->getDefaultApi());
