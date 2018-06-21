@@ -16,7 +16,7 @@ QString GoogleAPI::translate(const QString &input,
 
     QSettings settings;
     QString key = settings.value("google/key").toString();
-    QString format = settings.value("google/format").toString();
+    QString format = settings.value("google/text_type").toString();
 
     // Format POST url string.
     QString urlString = "https://translation.googleapis.com/language/translate/v2?";

@@ -16,7 +16,7 @@ QString TempAPI::translate(const QString &input,
 
     QSettings settings;
     QString key = settings.value("temp/key").toString();
-    QString format = settings.value("temp/format").toString();
+    QString format = settings.value("temp/text_type").toString();
 
     QString translation = "Some translation.";
 
