@@ -15,10 +15,39 @@ QString MicrosoftAPI::translate(const QString &input,
     }
 
     QSettings settings;
-    QString key = settings.value("temp/key").toString();
-    QString format = settings.value("temp/text_type").toString();
+    QString key = settings.value("microsoft/key").toString();
+    QString format = settings.value("microsoft/text_type").toString();
 
-    QString translation = "Some translation.";
+    // Format GET url string.
+    QByteArray authorizationHeaderContent = "Bearer " + key.toUtf8();
+    QString urlString = "https://api.microsofttranslator.com/V2/Http.svc/Translate?";
+    urlString.append("&from=" + sourceLanguage);
+    urlString.append("&to=" + targetLanguage);
+    urlString.append("&format=" + format);
+    urlString.append("&text=" + input);
+
+    QUrl url(urlString);
+    QNetworkRequest request(url);
+    request.setRawHeader("Ocp-Apim-Subscription-Key", key.toLocal8Bit());
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager();
+
+    RequestManager requestManager(nullptr, manager);
+    requestManager.getRequest(request);
+
+    // Parse the replay.
+    QByteArray replyByteArray = requestManager.getReply();
+
+    QDomDocument domDocument;
+    domDocument.setContent(replyByteArray);
+    QDomNodeList domNodeList = domDocument.elementsByTagName("string");
+
+    QString translation;
+    for (int i = 0; i < domNodeList.count(); ++i) {
+        translation.append(domNodeList.at(i).toElement().text());
+    }
+
+    // TODO(Ugnelis): catch the error.
 
     return translation;
 }
@@ -45,7 +74,6 @@ QStringList MicrosoftAPI::getSupportedLanguages() const {
     QDomDocument domDocument;
     domDocument.setContent(replyByteArray);
     QDomNodeList domNodeList = domDocument.elementsByTagName("string");
-    QString helloWorld = domNodeList.at(0).toElement().text();
 
     QStringList languagesList;
     for (int i = 0; i < domNodeList.count(); ++i) {
