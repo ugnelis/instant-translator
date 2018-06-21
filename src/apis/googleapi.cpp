@@ -1,7 +1,7 @@
 #include "googleapi.h"
 
 GoogleAPI::GoogleAPI(QObject *parent)
-        : QObject(parent) {
+        : API(parent) {
 }
 
 GoogleAPI::~GoogleAPI() {
@@ -14,9 +14,9 @@ QString GoogleAPI::translate(const QString &input,
         return QString();
     }
 
-    QSettings settings(":/resources/configs/api.ini", QSettings::IniFormat);
+    QSettings settings;
     QString key = settings.value("google/key").toString();
-    QString format = settings.value("google/format").toString();
+    QString format = settings.value("google/text_type").toString();
 
     // Format POST url string.
     QString urlString = "https://translation.googleapis.com/language/translate/v2?";
@@ -73,7 +73,7 @@ QString GoogleAPI::translate(const QString &input,
 }
 
 QStringList GoogleAPI::getSupportedLanguages() const {
-    QSettings settings(":/resources/configs/api.ini", QSettings::IniFormat);
+    QSettings settings;
     QString key = settings.value("google/key").toString();
 
     // Format GET url string.

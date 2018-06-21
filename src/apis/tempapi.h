@@ -1,29 +1,24 @@
-#ifndef INSTANT_TRANSLATOR_GOOGLEAPI_H
-#define INSTANT_TRANSLATOR_GOOGLEAPI_H
+#ifndef INSTANT_TRANSLATOR_TEMPAPI_H
+#define INSTANT_TRANSLATOR_TEMPAPI_H
 
-#include <stdexcept>
 #include <QSettings>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
 #include "api.h"
-#include "utils/requestmanager.h"
 
 /**
- * Google Translate API implementation class.
+ * Temporary API implementation class.
  */
-class GoogleAPI : public API {
+class TempAPI : public API {
 public:
     /**
      * Constructs an object with parent object parent.
      * @param parent Parent of an object may be viewed as the object's owner.
      */
-    explicit GoogleAPI(QObject *parent = nullptr);
+    explicit TempAPI(QObject *parent = nullptr);
 
     /**
      * Destructor.
      */
-    ~GoogleAPI() override;
+    ~TempAPI() override;
 
     /**
      * Translate given input.
@@ -43,4 +38,4 @@ public:
     QStringList getSupportedLanguages() const override;
 };
 
-#endif // INSTANT_TRANSLATOR_GOOGLEAPI_H
+#endif // INSTANT_TRANSLATOR_TEMPAPI_H

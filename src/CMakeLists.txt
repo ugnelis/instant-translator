@@ -30,7 +30,7 @@ set(OTHER_LIBRARIES
         glog)
 
 # UI files.
-qt5_wrap_ui(UI_HEADERS mainwindow.ui)
+qt5_wrap_ui(UI_HEADERS mainwindow.ui dialogs/settingsdialog.ui)
 
 set(RESOURCE_FILES
         resources.qrc)
@@ -39,9 +39,19 @@ qt5_add_resources(RESOURCE_FILES_ADDED ${RESOURCE_FILES})
 
 # Source files.
 set(SOURCE_FILES
+        apis/api.cpp
         apis/api.h
         apis/googleapi.cpp
         apis/googleapi.h
+        apis/tempapi.cpp
+        apis/tempapi.h
+        dialogs/settingsdialog.cpp
+        dialogs/settingsdialog.h
+        dialogs/settingsdialog.ui
+        utils/apisettings.cpp
+        utils/apisettings.h
+        utils/appsettings.cpp
+        utils/appsettings.h
         utils/language.cpp
         utils/language.h
         utils/requestmanager.cpp

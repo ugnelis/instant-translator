@@ -32,35 +32,35 @@ public:
      * @param code Language code.
      * @return Language name.
      */
-    QString getName(QString code);
+    QString getName(const QString &code) const;
 
     /**
      * Get language code.
      * @param name Language name.
      * @return Language code.
      */
-    QString getCode(QString name);
+    QString getCode(const QString &name) const;
 
     /**
      * Get the names of the languages.
      * @param codeList Language code list.
      * @return Language name list.
      */
-    QStringList getLanguages(QStringList codeList);
+    QStringList getLanguages(const QStringList &codeList) const;
 
     /**
      * Get the codes of the languages.
      * @param nameList Language name list.
      * @return codeList Language code list.
      */
-    QStringList getCodes(QStringList nameList);
+    QStringList getCodes(const QStringList &nameList) const;
 
 private:
     /**
      * Read language code and name from JSON file.
      * @param jsonFile JSON file path.
      */
-    void readFromJsonFile(QString jsonFile = ":/resources/languages.json");
+    void readFromJsonFile(const QString &jsonFile = ":/resources/languages.json");
 
     QHash<QString, QString> hash; // <language code, language name>.
 };

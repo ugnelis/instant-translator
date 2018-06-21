@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef INSTANT_TRANSLATOR_MAINWINDOW_H
+#define INSTANT_TRANSLATOR_MAINWINDOW_H
 
 #include <stdexcept>
 #include <QMainWindow>
@@ -8,10 +8,15 @@
 #include <QFutureWatcher>
 #include <QtConcurrent>
 #include <QStringList>
+#include <QSettings>
 #include <QMessageBox>
+#include <QList>
 #include <glog/logging.h>
 #include "apis/api.h"
 #include "apis/googleapi.h"
+#include "apis/tempapi.h"
+#include "dialogs/settingsdialog.h"
+#include "utils/appsettings.h"
 #include "utils/language.h"
 
 namespace Ui {
@@ -28,8 +33,10 @@ public:
     /**
      * Constructs an object with parent object parent.
      * @param parent Parent of an object may be viewed as the object's owner.
+     * @param appSettings App settings.
+     * @param apis APIs list.
      */
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent, AppSettings *appSettings, const QList<API *> &apis);
 
     /**
      * Destructor.
@@ -44,9 +51,14 @@ private slots:
     void onClipboardDataChanged();
 
     /**
-     * On exitAction is changed.
+     * On exitAction is triggered.
      */
     void on_exitAction_triggered();
+
+    /**
+     * On settingsAction is triggered.
+     */
+    void on_settingsAction_triggered();
 
     /**
      * On translateButton clicked.
@@ -59,6 +71,11 @@ private slots:
     void on_swapLanguagesButton_clicked();
 
 private:
+    /**
+     * Load translation API.
+     */
+    void loadApi();
+
     /**
      * Do translation.
      */
@@ -101,10 +118,13 @@ private:
      */
     void showErrorBox(const QString &message);
 
-    Ui::MainWindow *ui;     // MainWindow user interface.
-    QClipboard *clipboard;  // Clipboard information.
-    API *api;               // Translation API.
-    Language language;      // Language.
+    Ui::MainWindow *ui;                 // MainWindow user interface.
+    QClipboard *clipboard;              // Clipboard information.
+    APISettings *currentApiSettings;    // Current API settings.
+    AppSettings *appSettings;           // App settings.
+    QList<API *> apis;                  // Translation APIs.
+    API *currentApi;                    // Current API.
+    Language language;                  // Language.
 };
 
-#endif // MAINWINDOW_H
+#endif // INSTANT_TRANSLATOR_MAINWINDOW_H

@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent, AppSettings *appSettings, const QList<API *> &apis) :
         QMainWindow(parent),
-        ui(new Ui::MainWindow) {
+        ui(new Ui::MainWindow),
+        appSettings(appSettings),
+        apis(apis) {
     ui->setupUi(this);
 
     clipboard = QApplication::clipboard();
@@ -15,23 +17,21 @@ MainWindow::MainWindow(QWidget *parent) :
             &MainWindow::onClipboardDataChanged
     );
 
-    // Set Google Translator API.
-    api = new GoogleAPI(this);
-
-    // Load supported languages in the combo boxes.
-    loadLanguagesInComboBoxes();
+    // Load API.
+    loadApi();
 }
 
 MainWindow::~MainWindow() {
     // Save used translation languages.
-    QSettings settings;
+    APISettings *currentApiSettings = appSettings->getDefaultApi();
     QString sourceLanguage = language.getCode(ui->sourceLanguagesComboBox->currentText());
     QString targetLanguage = language.getCode(ui->targetLanguagesComboBox->currentText());
-    settings.setValue("source", sourceLanguage);
-    settings.setValue("target", targetLanguage);
+    currentApiSettings->setDefaultSourceLanguage(sourceLanguage);
+    currentApiSettings->setDefaultTargetLanguage(targetLanguage);
+    appSettings->save();
 
     delete ui;
-    delete api;
+    delete currentApi;
 }
 
 void MainWindow::onClipboardDataChanged() {
@@ -45,6 +45,25 @@ void MainWindow::onClipboardDataChanged() {
     doTranslation();
 }
 
+void MainWindow::loadApi() {
+    if (appSettings == nullptr) {
+        return;
+    }
+
+    currentApiSettings = appSettings->getDefaultApi();
+
+    int apiIndex = appSettings->getApiSettingsList().indexOf(appSettings->getDefaultApi());
+    if (apiIndex >= appSettings->getApiSettingsList().count()) {
+        showErrorBox("The number of defined APIs' settings is larger than actually defined APIs.");
+        return;
+    }
+
+    currentApi = apis.at(apiIndex);
+
+    // Load supported languages in the combo boxes.
+    loadLanguagesInComboBoxes();
+}
+
 void MainWindow::doTranslation() {
     QString inputString = ui->inputPlainTextEdit->toPlainText();
 
@@ -56,7 +75,7 @@ void MainWindow::doTranslation() {
     QFuture<QString> future = QtConcurrent::run(
             this,
             &MainWindow::runTranslation,
-            api,
+            currentApi,
             inputString,
             sourceLanguage,
             targetLanguage
@@ -81,12 +100,16 @@ void MainWindow::swapLanguagesInComboBoxes() {
 }
 
 void MainWindow::loadLanguagesInComboBoxes() {
+    // Clear data from the combo boxes.
+    ui->sourceLanguagesComboBox->clear();
+    ui->targetLanguagesComboBox->clear();
+
     // Get API supported languages.
     QFutureWatcher<QStringList> *futureWatcher = new QFutureWatcher<QStringList>(this);
     QFuture<QStringList> future = QtConcurrent::run(
             this,
             &MainWindow::runGetSupportedLanguages,
-            api
+            currentApi
     );
 
     // Load API supported languages to the combo boxes.
@@ -100,9 +123,9 @@ void MainWindow::loadLanguagesInComboBoxes() {
                 ui->targetLanguagesComboBox->addItems(languageNameList);
 
                 // Load saved translation languages.
-                QSettings settings;
-                QString sourceLanguage = settings.value("source", "de").toString();
-                QString targetLanguage = settings.value("target", "en").toString();
+                APISettings *defaultApiSettings = appSettings->getDefaultApi();
+                QString sourceLanguage = defaultApiSettings->getDefaultSourceLanguage();
+                QString targetLanguage = defaultApiSettings->getDefaultTargetLanguage();
 
                 // Set source language.
                 int sourceLanguageIndex = languageCodeList.indexOf(sourceLanguage);
@@ -165,6 +188,13 @@ void MainWindow::showErrorBox(const QString &message) {
 
 void MainWindow::on_exitAction_triggered() {
     this->close();
+}
+
+void MainWindow::on_settingsAction_triggered() {
+    SettingsDialog *settingsDialog = new SettingsDialog(this, appSettings);
+    settingsDialog->setAttribute(Qt::WA_DeleteOnClose);
+    settingsDialog->exec();
+    loadApi();
 }
 
 void MainWindow::on_translateButton_clicked() {
