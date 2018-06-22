@@ -43,7 +43,7 @@ target=en
 
 [microsoft]
 key=API_KEY
-text_type=text/plain
+text_type=plain
 source=lt
 target=en
 

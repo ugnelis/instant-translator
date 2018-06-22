@@ -35,7 +35,6 @@ QString GoogleAPI::translate(const QString &input,
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-
     QNetworkAccessManager *manager = new QNetworkAccessManager();
 
     RequestManager requestManager(nullptr, manager);

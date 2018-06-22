@@ -19,14 +19,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
-find_package(Qt5Xml REQUIRED)
 
 # Qt5 libraries.
 set(QT5_LIBRARIES
         Qt5::Widgets
         Qt5::Network
-        Qt5::Concurrent
-        Qt5::Xml)
+        Qt5::Concurrent)
 
 set(OTHER_LIBRARIES
         glog)

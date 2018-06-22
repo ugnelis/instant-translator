@@ -1,8 +1,11 @@
 #ifndef INSTANT_TRANSLATOR_MICROSOFTAPI_H
 #define INSTANT_TRANSLATOR_MICROSOFTAPI_H
 
+#include <stdexcept>
 #include <QSettings>
-#include <QDomNodeList>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include "api.h"
 #include "utils/requestmanager.h"
 

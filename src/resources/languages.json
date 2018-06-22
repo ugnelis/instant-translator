@@ -31,8 +31,8 @@
   {"code":"ce","name":"Chechen","nativeName":"нохчийн мотт"},
   {"code":"ny","name":"Chichewa; Chewa; Nyanja","nativeName":"chiCheŵa, chinyanja"},
   {"code":"zh","name":"Chinese (Simplified)","nativeName":"汉语"},
-  {"code":"zh-CHS","name":"Chinese (Simplified)","nativeName":"汉语"},
-  {"code":"zh-CHT","name":"Chinese (Traditional)","nativeName":"漢語"},
+  {"code":"zh-Hans","name":"Chinese (Simplified)","nativeName":"汉语"},
+  {"code":"zh-Hant","name":"Chinese (Traditional)","nativeName":"漢語"},
   {"code":"zh-TW","name":"Chinese (Traditional)","nativeName":"漢語"},
   {"code":"cv","name":"Chuvash","nativeName":"чӑваш чӗлхи"},
   {"code":"kw","name":"Cornish","nativeName":"Kernewek"},
@@ -197,7 +197,7 @@
   {"code":"yi","name":"Yiddish","nativeName":"ייִדיש"},
   {"code":"yo","name":"Yoruba","nativeName":"Yorùbá"},
   {"code":"yua","name":"Yucatec Maya","nativeName":"Màaya T'àan"},
-  {"code":"yue","name":"Cantonese","nativeName":"粵語"},
+  {"code":"yue","name":"Cantonese","nativeName":"粵語 (繁體中文)"},
   {"code":"za","name":"Zhuang, Chuang","nativeName":"Saɯ cueŋƅ, Saw cuengh"},
   {"code":"zu","name":"Zulu","nativeName":"isiZulu"}
 ]
