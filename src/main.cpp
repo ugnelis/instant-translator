@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include "apis/api.h"
 #include "apis/googleapi.h"
+#include "apis/microsoftapi.h"
 #include "apis/tempapi.h"
 #include "utils/apisettings.h"
 #include "utils/appsettings.h"
@@ -54,6 +55,10 @@ AppSettings *createAppSettings(QObject *parent) {
     googleAPISettings->readSettings();
     appSettings->addApiSettings(googleAPISettings);
 
+    APISettings *microsoftAPISettings = new APISettings(appSettings, "microsoft", "Microsoft Translator API");
+    microsoftAPISettings->readSettings();
+    appSettings->addApiSettings(microsoftAPISettings);
+
     APISettings *tempAPISettings = new APISettings(appSettings, "temp", "Temp API");
     tempAPISettings->readSettings();
     appSettings->addApiSettings(tempAPISettings);
@@ -68,6 +73,7 @@ AppSettings *createAppSettings(QObject *parent) {
 QList<API *> createAPIs() {
     QList<API *> apis;
     apis.append(new GoogleAPI());
+    apis.append(new MicrosoftAPI());
     apis.append(new TempAPI());
 
     return apis;

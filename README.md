@@ -19,6 +19,7 @@ Desktop application that is able to translate the content of web pages and dekst
 
 ## Supported APIs
 * [Google Translate API](https://cloud.google.com/translate/)
+* [Microsoft Translator API](https://www.microsoft.com/en-us/translator/translatorapi.aspx)
 
 ## How to Use?
 ### Add an API Key
@@ -37,6 +38,12 @@ default_api=google
 [google]
 key=API_KEY
 text_type=text
+source=lt
+target=en
+
+[microsoft]
+key=API_KEY
+text_type=plain
 source=lt
 target=en
 

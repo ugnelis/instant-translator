@@ -43,6 +43,8 @@ set(SOURCE_FILES
         apis/api.h
         apis/googleapi.cpp
         apis/googleapi.h
+        apis/microsoftapi.cpp
+        apis/microsoftapi.h
         apis/tempapi.cpp
         apis/tempapi.h
         dialogs/settingsdialog.cpp
