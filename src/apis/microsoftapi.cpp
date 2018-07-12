@@ -69,8 +69,6 @@ QString MicrosoftAPI::translate(const QString &input,
 
     QJsonArray replyJsonArray = replyJsonDocument.array();
 
-    qDebug() << replyJsonArray;
-
     QJsonArray translationsJsonArray = replyJsonArray[0]
             .toObject()["translations"]
             .toArray();
