@@ -15,28 +15,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QComboBox" name="sourceLanguagesComboBox"/>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPlainTextEdit" name="inputPlainTextEdit">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="readOnly">
-       <bool>false</bool>
-      </property>
-      <property name="plainText">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QPlainTextEdit" name="outpuPlainTextEdit"/>
-    </item>
-    <item row="4" column="0">
-     <widget class="QComboBox" name="targetLanguagesComboBox"/>
-    </item>
     <item row="2" column="0">
      <widget class="QWidget" name="gridWidget" native="true">
       <property name="enabled">
@@ -78,7 +56,53 @@
       </layout>
      </widget>
     </item>
+    <item row="0" column="0">
+     <widget class="QComboBox" name="sourceLanguagesComboBox"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPlainTextEdit" name="inputPlainTextEdit">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
+      </property>
+      <property name="plainText">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QPlainTextEdit" name="outpuPlainTextEdit"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QComboBox" name="targetLanguagesComboBox"/>
+    </item>
    </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <widget class="QLabel" name="currentApiLabel">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>200</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>200</width>
+      <height>15</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Default API</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

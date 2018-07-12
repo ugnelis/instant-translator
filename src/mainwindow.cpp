@@ -60,6 +60,9 @@ void MainWindow::loadApi() {
 
     currentApi = apis.at(apiIndex);
 
+    // Set the name of current API.
+    ui->currentApiLabel->setText(currentApiSettings->getFullName());
+
     // Load supported languages in the combo boxes.
     loadLanguagesInComboBoxes();
 }
